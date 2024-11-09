@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>07e73b97-24a7-4564-8ed0-dd9ae0b50e4d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AuthorisationService\AuthorisationService.API\AuthorisationService.API.csproj" />
+    <ProjectReference Include="..\NutritionBalance.ApiGateway\NutritionBalance.ApiGateway.csproj" />
+  </ItemGroup>
+
+</Project>

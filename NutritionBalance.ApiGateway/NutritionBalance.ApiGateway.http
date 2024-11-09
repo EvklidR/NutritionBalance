@@ -1,0 +1,6 @@
+@NutritionBalance.ApiGateway_HostAddress = http://localhost:5197
+
+GET {{NutritionBalance.ApiGateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
