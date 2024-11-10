@@ -15,7 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthorisationService\AuthorisationService.API\AuthorisationService.API.csproj" />
+    <ProjectReference Include="..\MealPlanService\MealPlanService.API\MealPlanService.API.csproj" />
     <ProjectReference Include="..\NutritionBalance.ApiGateway\NutritionBalance.ApiGateway.csproj" />
+    <ProjectReference Include="..\ProductService\ProductService.API\ProductService.API.csproj" />
+    <ProjectReference Include="..\UserProfileService\UserProfileService.API\UserProfileService.API.csproj" />
   </ItemGroup>
 
 </Project>

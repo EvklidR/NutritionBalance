@@ -15,6 +15,10 @@ namespace AuthorisationService.Infrastructure.MSSQL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
+                .ToTable("Users", "AuthorizationServiceSchema");
+
+
+            modelBuilder.Entity<User>()
                 .HasIndex(u => u.Login)
                 .IsUnique();
 

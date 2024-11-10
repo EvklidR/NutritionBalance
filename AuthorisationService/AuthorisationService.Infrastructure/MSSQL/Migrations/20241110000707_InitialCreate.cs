@@ -6,13 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AuthorisationService.Infrastructure.MSSQL.Migrations
 {
     /// <inheritdoc />
-    public partial class InitCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "AuthorizationServiceSchema");
+
             migrationBuilder.CreateTable(
                 name: "Users",
+                schema: "AuthorizationServiceSchema",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -31,12 +35,14 @@ namespace AuthorisationService.Infrastructure.MSSQL.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
+                schema: "AuthorizationServiceSchema",
                 table: "Users",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Login",
+                schema: "AuthorizationServiceSchema",
                 table: "Users",
                 column: "Login",
                 unique: true);
@@ -46,7 +52,8 @@ namespace AuthorisationService.Infrastructure.MSSQL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Users",
+                schema: "AuthorizationServiceSchema");
         }
     }
 }

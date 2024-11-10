@@ -59,7 +59,7 @@ namespace AuthorisationService.Infrastructure.MSSQL.Migrations
                     b.HasIndex("Login")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", "AuthorizationServiceSchema");
                 });
 #pragma warning restore 612, 618
         }

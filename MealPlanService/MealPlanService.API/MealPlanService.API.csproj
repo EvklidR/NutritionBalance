@@ -4,16 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>7428c03a-a843-41fb-8e6a-4269c88f0377</UserSecretsId>
+    <UserSecretsId>fe88d011-7c89-4f9b-91aa-7945a2f85933</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
@@ -21,8 +18,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\NutritionBalance.ServiceDefaults\NutritionBalance.ServiceDefaults.csproj" />
-    <ProjectReference Include="..\AuthorisationService.Application\AuthorisationService.Application.csproj" />
-    <ProjectReference Include="..\AuthorisationService.Infrastructure\AuthorisationService.Infrastructure.csproj" />
+    <ProjectReference Include="..\MealPlanService.Application\MealPlanService.Application.csproj" />
+    <ProjectReference Include="..\MealPlanService.Infrastructure\MealPlanService.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Filters\" />
   </ItemGroup>
 
 </Project>
