@@ -2,9 +2,9 @@
 {
     public interface IUnitOfWork
     {
-        IMealPlanRepository MealPlanRepository { get; }
-        IMealPlanDayRepository MealPlanDayRepository { get; }
-        INutrientOfDayRepository NutrientOfDayRepository { get; }
+        IMealPlanRepository MealPlans { get; }
+        //IMealPlanDayRepository MealPlanDays { get; }
+        //INutrientOfDayRepository NutrientsOfDay { get; }
 
         Task<int> SaveChangesAsync();
     }

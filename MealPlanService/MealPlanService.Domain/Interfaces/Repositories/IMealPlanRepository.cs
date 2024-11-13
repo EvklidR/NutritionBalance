@@ -5,7 +5,7 @@ namespace MealPlanService.Domain.Interfaces
 {
     public interface IMealPlanRepository
     {
-        Task<MealPlan> GetByIdAsync(int id);
+        Task<MealPlan?> GetByIdAsync(int id);
         Task<IEnumerable<MealPlan>?> GetAllAsync();
         Task<IEnumerable<MealPlan>?> GetByTypeAsync(MealPlanType type, int pageNumber, int pageSize);
         void Add(MealPlan mealPlan);

@@ -1,34 +1,50 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MealPlanService.Domain.Entities;
+﻿using MealPlanService.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MealPlanService.Infrastructure.MSSQL
 {
     public class ApplicationDbContext : DbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
+            : base(options)
         {
         }
 
-        public DbSet<Event> Events { get; set; }
-        public DbSet<ParticipantOfEvent> Participants { get; set; }
+        public DbSet<MealPlan> MealPlans { get; set; } = null!;
+        public DbSet<MealPlanDay> MealPlanDays { get; set; } = null!;
+        public DbSet<NutrientOfDay> NutrientsOfDay { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ParticipantOfEvent>()
-                .HasKey(p => p.Id);
 
-            modelBuilder.Entity<ParticipantOfEvent>()
-                .HasIndex(p => new { p.EventId, p.UserId })
+            modelBuilder.Entity<MealPlan>()
+                .ToTable("MealPlans", "MealPlanServiceSchema");
+
+            modelBuilder.Entity<MealPlanDay>()
+                .ToTable("MealPlanDays", "MealPlanServiceSchema");
+
+            modelBuilder.Entity<NutrientOfDay>()
+                .ToTable("NutrientsOfDay", "MealPlanServiceSchema");
+
+
+            modelBuilder.Entity<MealPlan>()
+                .HasMany(mp => mp.Days)
+                .WithOne()
+                .HasForeignKey(mpd => mpd.MealPlanId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MealPlanDay>()
+                .HasMany(mpd => mpd.NutrientsOfDay)
+                .WithOne()
+                .HasForeignKey(nd => nd.MealPlanDayId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MealPlanDay>()
+                .HasIndex(mpd => new { mpd.MealPlanId, mpd.NumberOfDay })
                 .IsUnique();
 
-            modelBuilder.Entity<ParticipantOfEvent>()
-                .HasOne<Event>()
-                .WithMany(e => e.Participants)
-                .HasForeignKey(p => p.EventId);
-
-            modelBuilder.Entity<Event>()
-                .HasIndex(e => e.Name)
+            modelBuilder.Entity<NutrientOfDay>()
+                .HasIndex(nd => new { nd.MealPlanDayId, nd.NutrientType })
                 .IsUnique();
         }
     }

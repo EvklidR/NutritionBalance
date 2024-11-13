@@ -7,7 +7,7 @@ namespace UserProfileService.Domain.Interfaces
     public interface IProfileRepository
     {
         Task<Profile> GetByIdAsync(int id);
-        Task<Profile?> GetByUserIdAsync(int userId);
+        Task<IEnumerable<Profile>?> GetAllByUserIdAsync(int userId);
         Task<IEnumerable<Profile>> GetAllAsync();
         void Add(Profile profile);
         void Update(Profile profile);

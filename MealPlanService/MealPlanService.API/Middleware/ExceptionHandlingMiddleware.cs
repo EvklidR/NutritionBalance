@@ -1,4 +1,4 @@
-﻿using EventsService.Application.Exceptions;
+﻿using MealPlanService.Application.Exceptions;
 using Newtonsoft.Json;
 using System.Net;
 

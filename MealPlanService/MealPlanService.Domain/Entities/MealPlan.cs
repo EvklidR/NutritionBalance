@@ -8,8 +8,8 @@ namespace MealPlanService.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public MealPlanType Type { get; set; }
-        public int DaysInCycle { get; set; }
         public string? ImageUrl { get; set; }
+
         public List<MealPlanDay> Days { get; set; } = new List<MealPlanDay>();
     }
 

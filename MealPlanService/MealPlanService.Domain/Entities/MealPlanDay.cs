@@ -5,11 +5,9 @@
         public int Id { get; set; }
         public int MealPlanId { get; set; }
         public int NumberOfDay { get; set; }
-        public double CaloriePercentage { get; set; }
+        public double CaloriePercentage { get; set; } = 0;
 
-
-        public MealPlan MealPlan { get; set; } = null!;
-        public List<NutrientOfDay> NutrientOfDay { get; set; } = new List<NutrientOfDay>();
+        public List<NutrientOfDay> NutrientsOfDay { get; set; } = new List<NutrientOfDay>();
     }
 
 }
