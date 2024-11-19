@@ -15,7 +15,7 @@ namespace MealPlanService.Infrastructure.DependencyInjection
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddScoped<IMealPlanRepository, MealPlanRepository>();
+            services.AddScoped<IMealPlanRepository, MealPlanRepository>();
             //services.AddScoped<IParticipantRepository, ParticipantRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

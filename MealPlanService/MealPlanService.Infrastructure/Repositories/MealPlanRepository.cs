@@ -32,7 +32,6 @@ namespace MealPlanService.Infrastructure.Repositories
         {
             return await _context.MealPlans
                 .Where(mp => mp.Type == type)
-                .Include(mp => mp.Days)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -48,9 +47,8 @@ namespace MealPlanService.Infrastructure.Repositories
             _context.MealPlans.Update(mealPlan);
         }
 
-        public void Delete(int id)
+        public void Delete(MealPlan mealPlan)
         {
-            var mealPlan = new MealPlan { Id = id };
             _context.MealPlans.Remove(mealPlan);
         }
     }

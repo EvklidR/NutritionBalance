@@ -13,9 +13,7 @@ namespace MealPlanService.Application.DependencyInjection
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddScoped<CreateMealPlan>();
-            services.AddScoped<UpdateMealPlan>();
-
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
             return services;
 

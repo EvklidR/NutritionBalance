@@ -10,6 +10,6 @@ namespace MealPlanService.Domain.Interfaces
         Task<IEnumerable<MealPlan>?> GetByTypeAsync(MealPlanType type, int pageNumber, int pageSize);
         void Add(MealPlan mealPlan);
         void Update(MealPlan mealPlan);
-        void Delete(int id);
+        void Delete(MealPlan mealPlan);
     }
 }

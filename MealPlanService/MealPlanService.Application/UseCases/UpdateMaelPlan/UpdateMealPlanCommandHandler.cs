@@ -1,33 +1,33 @@
 ﻿using AutoMapper;
+using MediatR;
 using MealPlanService.Domain.Entities;
 using MealPlanService.Domain.Interfaces;
 using MealPlanService.Application.Exceptions;
 
 namespace MealPlanService.Application.UseCases
 {
-    public class UpdateMealPlan
+    public class UpdateMealPlanCommandHandler : IRequestHandler<UpdateMealPlanCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public UpdateMealPlan(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateMealPlanCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task ExecuteAsync(MealPlan mealPlan)
+        public async Task Handle(UpdateMealPlanCommand request, CancellationToken cancellationToken)
         {
-            var executingMealPlan = await _unitOfWork.MealPlans.GetByIdAsync(mealPlan.Id);
+            var existingMealPlan = await _unitOfWork.MealPlans.GetByIdAsync(request.MealPlan.Id);
 
-            if (executingMealPlan == null)
+            if (existingMealPlan == null)
             {
                 throw new NotFoundException("Meal plan not found");
             }
 
-            _mapper.Map(mealPlan, executingMealPlan);
+            _mapper.Map(request.MealPlan, existingMealPlan);
             await _unitOfWork.SaveChangesAsync();
-
         }
     }
 }

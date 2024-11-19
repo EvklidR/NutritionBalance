@@ -1,34 +1,57 @@
 ﻿using MealPlanService.Application.DTOs;
 using MealPlanService.Application.UseCases;
 using MealPlanService.Domain.Entities;
+using MealPlanService.Domain.Enums;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 [Route("[controller]")]
 [ApiController]
 public class MealPlanController : ControllerBase
 {
-    private readonly CreateMealPlan _createMealPlanCase;
-    private readonly UpdateMealPlan _updateMealPlanCase;
+    private readonly IMediator _mediator;
 
-    public MealPlanController(CreateMealPlan createMealPlan, UpdateMealPlan updateMealPlan)
+    public MealPlanController(IMediator mediator)
     {
-        _createMealPlanCase = createMealPlan;
-        _updateMealPlanCase = updateMealPlan;
+        _mediator = mediator;
     }
 
     [HttpPost("create")]
     [ServiceFilter(typeof(ValidateMealPlanFilter))]
-    public async Task<ActionResult> AddMealPlan(MealPlanCreateDTO mealPlanCreateDTO)
+    public async Task<ActionResult> AddMealPlan(CreateMealPlanCommand command)
     {
-        var plan = await _createMealPlanCase.ExecuteAsync(mealPlanCreateDTO);
-        return Ok(plan);
+        var result = await _mediator.Send(command);
+        return Ok(result);
     }
 
     [HttpPost("update")]
     [ServiceFilter(typeof(ValidateMealPlanFilter))]
-    public async Task<ActionResult> UpdateMealPlan(MealPlan mealPlan)
+    public async Task<ActionResult> UpdateMealPlan(UpdateMealPlanCommand command)
     {
-        await _updateMealPlanCase.ExecuteAsync(mealPlan);
+        await _mediator.Send(command);
         return Ok();
+    }
+
+    [HttpPost("delete")]
+    [ServiceFilter(typeof(ValidateMealPlanFilter))]
+    public async Task<ActionResult> DeleteMealPlan(DeleteMealPlanCommand command)
+    {
+        await _mediator.Send(command);
+        return Ok();
+    }
+
+    [HttpGet("category")]
+    public async Task<ActionResult<IEnumerable<MealPlan>>> GetMealPlansByCategory(MealPlanType type, int pageNumber = 1, int pageSize = 3)
+    {
+        var query = new GetMealPlansByTypeQuery(type, pageNumber, pageSize);
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpPost("calculate-kcal")]
+    public async Task<ActionResult> CalculateKcalAndMacros([FromBody] GetKcalAndMacrosQuery query)
+    {
+        var result = await _mediator.Send(query);
+        return Ok(result);
     }
 }
