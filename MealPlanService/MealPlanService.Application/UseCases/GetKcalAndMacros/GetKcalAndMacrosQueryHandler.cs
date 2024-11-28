@@ -31,64 +31,54 @@ namespace MealPlanService.Application.UseCases
 
             double protein = 0, fat = 0, carbs = 0;
 
-            var bodyWeightNutrients = mealPlanDay.NutrientsOfDay.Where(n => n.CalculationType == CalculationType.PerKg).ToList();
-            foreach (var nutrient in bodyWeightNutrients)
+            foreach(var nutrient in mealPlanDay.NutrientsOfDay) 
             {
-                double multiplier = nutrient.Value ?? 0;
-                if (nutrient.NutrientType == NutrientType.Protein)
-                    protein = multiplier * request.bodyWeight;
-                if (nutrient.NutrientType == NutrientType.Fat)
-                    fat = multiplier * request.bodyWeight;
-                if (nutrient.NutrientType == NutrientType.Carbohydrate)
-                    carbs = multiplier * request.bodyWeight;
-            }
-
-            var calorieBasedNutrients = mealPlanDay.NutrientsOfDay.Where(n => n.CalculationType == CalculationType.Persent).ToList();
-            foreach (var nutrient in calorieBasedNutrients)
-            {
-                double nutrientPercentage = nutrient.Value ?? 0;
-                if (nutrient.NutrientType == NutrientType.Protein)
-                    protein = (nutrientPercentage / 100) * totalCalories / 4;
-                if (nutrient.NutrientType == NutrientType.Fat)
-                    fat = (nutrientPercentage / 100) * totalCalories / 9;
-                if (nutrient.NutrientType == NutrientType.Carbohydrate)
-                    carbs = (nutrientPercentage / 100) * totalCalories / 4;
-            }
-
-            var fixedNutrients = mealPlanDay.NutrientsOfDay.Where(n => n.CalculationType == CalculationType.Fixed).ToList();
-            foreach (var nutrient in fixedNutrients)
-            {
-                double fixedAmount = nutrient.Value ?? 0;
-                if (nutrient.NutrientType == NutrientType.Protein)
-                    protein = fixedAmount;
-                if (nutrient.NutrientType == NutrientType.Fat)
-                    fat = fixedAmount;
-                if (nutrient.NutrientType == NutrientType.Carbohydrate)
-                    carbs = fixedAmount;
-            }
-
-            double remainingCalories = totalCalories - (protein * 4 + fat * 9 + carbs * 4);
-            if (remainingCalories > 0)
-            {
-                var remainingNutrient = mealPlanDay.NutrientsOfDay
-                    .FirstOrDefault(n => n.CalculationType == CalculationType.Bydefault); // Предполагаем, что есть только один такой нутриент
-
-                if (remainingNutrient != null)
+                switch (nutrient.CalculationType)
                 {
-                    double nutrientPercentage = remainingNutrient.Value ?? 0;
+                    case CalculationType.PerKg:
+                        if (nutrient.NutrientType == NutrientType.Protein)
+                            protein = (double)nutrient.Value! * request.bodyWeight;
+                        else if (nutrient.NutrientType == NutrientType.Fat)
+                            fat = (double)nutrient.Value! * request.bodyWeight;
+                        else if (nutrient.NutrientType == NutrientType.Carbohydrate)
+                            carbs = (double)nutrient.Value! * request.bodyWeight;
+                        break;
 
-                    if (remainingNutrient.NutrientType == NutrientType.Protein)
-                        protein = (nutrientPercentage / 100) * remainingCalories / 4;
-                    else if (remainingNutrient.NutrientType == NutrientType.Fat)
-                        fat = (nutrientPercentage / 100) * remainingCalories / 9;
-                    else if (remainingNutrient.NutrientType == NutrientType.Carbohydrate)
-                        carbs = (nutrientPercentage / 100) * remainingCalories / 4;
+                    case CalculationType.Persent:
+                        double caloriesFromPercentage = (double)nutrient.Value! * totalCalories;
+                        if (nutrient.NutrientType == NutrientType.Protein)
+                            protein = caloriesFromPercentage / 4;
+                        else if (nutrient.NutrientType == NutrientType.Fat)
+                            fat = caloriesFromPercentage / 9;
+                        else if (nutrient.NutrientType == NutrientType.Carbohydrate)
+                            carbs = caloriesFromPercentage / 4;
+                        break;
+
+                    case CalculationType.Fixed:
+                        if (nutrient.NutrientType == NutrientType.Protein)
+                            protein = (double)nutrient.Value!;
+                        else if (nutrient.NutrientType == NutrientType.Fat)
+                            fat = (double)nutrient.Value!;
+                        else if (nutrient.NutrientType == NutrientType.Carbohydrate)
+                            carbs = (double)nutrient.Value!;
+                        break;
+
+                    case CalculationType.Bydefault:
+                        double remainingCalories = totalCalories - (protein * 4 + fat * 9 + carbs * 4);
+                        if (remainingCalories > 0)
+                        {
+                            if (nutrient.NutrientType == NutrientType.Protein)
+                                protein = remainingCalories / 4;
+                            else if (nutrient.NutrientType == NutrientType.Fat)
+                                fat = remainingCalories / 9;
+                            else if (nutrient.NutrientType == NutrientType.Carbohydrate)
+                                carbs = remainingCalories / 4;
+                        }
+                        break;
                 }
             }
 
-
-
-            return (Calories: totalCalories, Protein: protein, Fat: fat, Carbs: carbs);
+            return (totalCalories, protein, fat, carbs);
         }
     }
 }

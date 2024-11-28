@@ -6,16 +6,16 @@ namespace MealPlanService.API.DependencyInjection
     {
         public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
         {
-            //var allowedOrigins = configuration.GetSection("AllowedOrigins:CorsOrigins").Get<string[]>();
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("AllowSpecificOrigin", builder =>
-            //    {
-            //        builder.WithOrigins(allowedOrigins)
-            //               .AllowAnyMethod()
-            //               .AllowAnyHeader();
-            //    });
-            //});
+            var allowedOrigins = configuration.GetSection("AllowedOrigins:CorsOrigins").Get<string[]>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", builder =>
+                {
+                    builder.WithOrigins(allowedOrigins)
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
             services.AddScoped<ValidateMealPlanFilter>();
 
             services.AddControllers();

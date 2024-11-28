@@ -6,9 +6,8 @@ namespace UserProfileService.Domain.Interfaces
     {
         IDishRepository DishRepository { get; }
         IIngredientRepository IngredientRepository { get; }
-        IIngredientOfDishRepository IngredientOfDishRepository { get; }
         IProfileRepository ProfileRepository { get; }
-        IDayResultRepository dayResultRepository { get; }
+        IDayResultRepository DayResultRepository { get; }
         Task SaveChangesAsync();
     }
 }

@@ -5,31 +5,23 @@ namespace UserProfileService.Infrastructure.MSSQL
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
-        public DbSet<Event> Events { get; set; }
-        public DbSet<ParticipantOfEvent> Participants { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<DayResult> DayResults { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<Dish> Dishes { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<IngredientOfDish> IngredientOfDishes { get; set; }
+        public DbSet<EatenFood> EatenFoods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ParticipantOfEvent>()
-                .HasKey(p => p.Id);
+            modelBuilder.HasDefaultSchema("UserProfileServiceSchema");
 
-            modelBuilder.Entity<ParticipantOfEvent>()
-                .HasIndex(p => new { p.EventId, p.UserId })
-                .IsUnique();
-
-            modelBuilder.Entity<ParticipantOfEvent>()
-                .HasOne<Event>()
-                .WithMany(e => e.Participants)
-                .HasForeignKey(p => p.EventId);
-
-            modelBuilder.Entity<Event>()
-                .HasIndex(e => e.Name)
-                .IsUnique();
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }
 }

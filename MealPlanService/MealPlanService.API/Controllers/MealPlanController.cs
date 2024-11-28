@@ -1,5 +1,4 @@
-﻿using MealPlanService.Application.DTOs;
-using MealPlanService.Application.UseCases;
+﻿using MealPlanService.Application.UseCases;
 using MealPlanService.Domain.Entities;
 using MealPlanService.Domain.Enums;
 using MediatR;

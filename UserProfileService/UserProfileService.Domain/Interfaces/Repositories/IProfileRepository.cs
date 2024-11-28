@@ -1,17 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using UserProfileService.Domain.Entities;
+using UserProfileService.Domain.Interfaces.Repositories;
 
 namespace UserProfileService.Domain.Interfaces
 {
-    public interface IProfileRepository
+    public interface IProfileRepository : IBaseRepository<Profile>
     {
-        Task<Profile> GetByIdAsync(int id);
-        Task<IEnumerable<Profile>?> GetAllByUserIdAsync(int userId);
-        Task<IEnumerable<Profile>> GetAllAsync();
-        void Add(Profile profile);
-        void Update(Profile profile);
-        void Delete(int id);
-        Task SaveAsync();
     }
 }

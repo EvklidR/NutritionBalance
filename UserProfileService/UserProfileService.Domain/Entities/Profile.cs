@@ -11,10 +11,11 @@ namespace UserProfileService.Domain.Entities
         public double Height { get; set; }
         public DateOnly Birthday { get; set; }
         public Gender Gender { get; set; }
-        public double ActivityLevel { get; set; } // уровень активности (1.2 - малоподвижный, 1.375 - низкий, 1.55 - средний, 1.725 - высокий)
+        public double ActivityLevel { get; set; }
         public int DesiredGlassesOfWater { get; set; }
         public int? MealPlanId { get; set; }
-        public DateOnly DateOfStartPlan { get; set; }
+        public DateOnly? DateOfStartPlan { get; set; }
 
+        public List<DayResult> DayResults { get; set; } = new List<DayResult>();
     }
 }

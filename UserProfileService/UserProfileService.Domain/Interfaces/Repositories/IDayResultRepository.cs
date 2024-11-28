@@ -2,12 +2,9 @@
 
 namespace UserProfileService.Domain.Interfaces.Repositories
 {
-    public interface IDayResultRepository
+    public interface IDayResultRepository : IBaseRepository<DayResult>
     {
-        Task<DayResult?> GetByIdAsync(int profileId, DateOnly date);
-        Task<IEnumerable<DayResult>> GetByProfileIdAsync(int profileId);
-        void Add(DayResult dayResult);
-        void Update(DayResult dayResult);
-        void Delete(int profileId, DateOnly date);
+        Task<IEnumerable<DayResult>?> GetAllByPeriodAsync(int ProfileId, DateOnly dateStart, DateOnly dateEnd);
+        Task<DayResult?> GetByDateAsync(int ProfileId, DateOnly date);
     }
 }

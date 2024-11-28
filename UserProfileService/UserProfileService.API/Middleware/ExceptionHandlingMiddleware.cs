@@ -1,4 +1,4 @@
-﻿using EventsService.Application.Exceptions;
+﻿using UserProfileService.Application.Exceptions;
 using Newtonsoft.Json;
 using System.Net;
 

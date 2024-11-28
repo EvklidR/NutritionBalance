@@ -3,10 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using UserProfileService.Infrastructure.MSSQL;
 using UserProfileService.Infrastructure.Repositories;
 using UserProfileService.Domain.Interfaces;
-using UserProfileService.Infrastructure.Services;
-using UserProfileService.Application.Interfaces;
 using Microsoft.Extensions.Configuration;
-using StackExchange.Redis;
+using UserProfileService.Domain.Interfaces.Repositories;
 
 namespace UserProfileService.Infrastructure.DependencyInjection
 {
@@ -18,21 +16,20 @@ namespace UserProfileService.Infrastructure.DependencyInjection
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IParticipantRepository, ParticipantRepository>();
+            services.AddScoped<IDayResultRepository, DayResultRepository>();
+            services.AddScoped<IDishRepository, DishRepository>();
+            services.AddScoped<IIngredientRepository, IngredientRepository>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddTransient<IEmailSender, EmailSender>();
 
-            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), configuration["ImageSettings:ImagePath"]);
-            if (!Directory.Exists(imagePath))
-            {
-                Directory.CreateDirectory(imagePath);
-            }
+            //var imagePath = Path.Combine(Directory.GetCurrentDirectory(), configuration["ImageSettings:ImagePath"]);
+            //if (!Directory.Exists(imagePath))
+            //{
+            //    Directory.CreateDirectory(imagePath);
+            //}
 
-            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("127.0.0.1:6379"));
-
-            services.AddScoped<IImageService>(provider => new ImageService(imagePath, provider.GetRequiredService<IConnectionMultiplexer>()));
+            //services.AddScoped<IImageService>(provider => new ImageService(imagePath, provider.GetRequiredService<IConnectionMultiplexer>()));
 
             return services;
         }
