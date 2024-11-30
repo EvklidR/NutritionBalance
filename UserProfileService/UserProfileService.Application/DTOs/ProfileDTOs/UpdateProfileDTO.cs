@@ -9,7 +9,7 @@ namespace UserProfileService.Application.DTOs
         public string Name { get; set; }
         public double Weight { get; set; }
         public double Height { get; set; }
-        public ActivityLevel ActivityLevel { get; set; } // уровень активности (1.2 - малоподвижный, 1.375 - низкий, 1.55 - средний, 1.725 - высокий, 1.9 - )
+        public ActivityLevel ActivityLevel { get; set; }
         public int DesiredGlassesOfWater { get; set; }
     }
 }

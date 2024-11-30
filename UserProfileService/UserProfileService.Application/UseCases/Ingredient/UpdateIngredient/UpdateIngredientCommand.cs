@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using UserProfileService.Application.DTOs.IngredientDTOs;
+using UserProfileService.Application.DTOs;
 
-namespace UserProfileService.Application.UseCases.Ingredient.UpdateIngredient
+namespace UserProfileService.Application.UseCases.Ingredient
 {
     public class UpdateIngredientCommand : IRequest
     {

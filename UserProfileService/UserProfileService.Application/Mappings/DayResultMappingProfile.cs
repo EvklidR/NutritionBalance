@@ -8,16 +8,20 @@ namespace UserProfileService.Application.Mappings
     {
         public DayResultMappingProfile()
         {
+            CreateMap<UpdateDayResultDTO, DayResult>()
+                .ForMember(dest => dest.ProfileId, opt => opt.Ignore())
+                .ForMember(dest => dest.Meals, opt => opt.MapFrom(src => src.Meals));
+
             CreateMap<CreateDayResultDTO, DayResult>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Meals, opt => opt.MapFrom(src => src.Meals));
 
-            CreateMap<CreateMealDTO, Meal>()
+            CreateMap<CreateOrUpdateMealDTO, Meal>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.DayId, opt => opt.Ignore())
                 .ForMember(dest => dest.Foods, opt => opt.MapFrom(src => src.Foods));
 
-            CreateMap<CreateEatenFoodDTO, EatenFood>()
+            CreateMap<CreateOrUpdateEatenFoodDTO, EatenFood>()
                 .ForMember(dest => dest.MealId, opt => opt.Ignore())
                 .ForMember(dest => dest.Food, opt => opt.Ignore());
         }

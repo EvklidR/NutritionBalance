@@ -10,6 +10,6 @@
         public int GlassesOfWater { get; set; } = 0;
 
 
-        public List<CreateMealDTO>? Meals { get; set; } = new List<CreateMealDTO>();
+        public List<CreateOrUpdateMealDTO>? Meals { get; set; } = new List<CreateOrUpdateMealDTO>();
     }
 }

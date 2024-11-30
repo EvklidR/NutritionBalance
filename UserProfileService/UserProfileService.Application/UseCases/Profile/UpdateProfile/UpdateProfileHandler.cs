@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using UserProfileService.Application.Exceptions;
 using UserProfileService.Domain.Interfaces;
 
 namespace UserProfileService.Application.UseCases.Profile
@@ -20,7 +21,7 @@ namespace UserProfileService.Application.UseCases.Profile
             var profile = await _unitOfWork.ProfileRepository.GetByIdAsync(request.ProfileDto.Id);
 
             if (profile == null)
-                throw new KeyNotFoundException("Profile not found.");
+                throw new NotFoundException("Profile not found.");
 
             _mapper.Map(request.ProfileDto, profile);
 

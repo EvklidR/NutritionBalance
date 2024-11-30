@@ -6,7 +6,9 @@ namespace UserProfileService.Application.Mappings
     {
         public ProfileMappingProfile()
         {
-            CreateMap<CreateProfileDTO, Domain.Entities.Profile>();
+            CreateMap<CreateProfileDTO, Domain.Entities.Profile>()
+                 .ForMember(dest => dest.Id, opt => opt.Ignore())
+                 .ForMember(dest => dest.ActivityLevel, opt => opt.MapFrom(src => GetActivityMultiplier(src.ActivityLevel)));
 
             CreateMap<UpdateProfileDTO, Domain.Entities.Profile>()
                  .ForMember(dest => dest.UserId, opt => opt.Ignore())

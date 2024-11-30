@@ -1,9 +1,8 @@
 ﻿namespace UserProfileService.Application.DTOs
 {
-
-    public class CreateEatenFoodDTO
+    public class IngredientOfDishDTO
     {
-        public int FoodId { get; set; }
+        public int IngredientId { get; set; }
         public double Weight { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using UserProfileService.Application.DTOs;
 
 namespace UserProfileService.Application.Validators
 {
-    public class CreateMealDTOValidator : AbstractValidator<CreateMealDTO>
+    public class CreateMealDTOValidator : AbstractValidator<CreateOrUpdateMealDTO>
     {
         public CreateMealDTOValidator()
         {
