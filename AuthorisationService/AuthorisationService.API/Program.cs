@@ -18,6 +18,9 @@ namespace EventsApp.AuthorisationService
             builder.AddServiceDefaults();
 
             var app = builder.Build();
+
+            app.MapGrpcService<UserAuthServiceImpl>();
+
             app.UseCors("AllowSpecificOrigin");
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 

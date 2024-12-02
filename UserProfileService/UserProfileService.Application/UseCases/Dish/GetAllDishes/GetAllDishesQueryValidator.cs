@@ -6,7 +6,7 @@ namespace UserProfileService.Application.UseCases.Dish
     {
         public GetAllDishesQueryValidator() 
         {
-            RuleFor(x => x.ProfileId).GreaterThan(0);
+            RuleFor(x => x.ProfileId).GreaterThan(0).WithMessage("Profile id must be greater than 0");
         }
     }
 }

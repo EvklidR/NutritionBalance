@@ -7,7 +7,7 @@ namespace UserProfileService.Application.UseCases.Dish
         public GetDishByIdQueryValidator() 
         {
             RuleFor(x => x.Id)
-                .GreaterThan(0);
+                .GreaterThan(0).WithMessage("Id must be greater than 0");
         }
     }
 }

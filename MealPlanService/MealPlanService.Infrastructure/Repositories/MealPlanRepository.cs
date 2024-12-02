@@ -22,6 +22,14 @@ namespace MealPlanService.Infrastructure.Repositories
                 .ThenInclude(d => d.NutrientsOfDay)
                 .FirstOrDefaultAsync(mp => mp.Id == id);
         }
+        public async Task<IEnumerable<MealPlan>?> GetByOwnerAsync(int id)
+        {
+            return await _context.MealPlans
+                .Where(mp => mp.OwnerId == id)
+                .Include(mp => mp.Days)
+                .ThenInclude(d => d.NutrientsOfDay)
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<MealPlan>?> GetAllAsync()
         {

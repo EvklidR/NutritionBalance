@@ -28,7 +28,7 @@ namespace UserProfileService.API.Middleware
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             HttpStatusCode statusCode;
-            string result;
+            object result;
 
             switch (exception)
             {
@@ -36,13 +36,21 @@ namespace UserProfileService.API.Middleware
                     statusCode = HttpStatusCode.NotFound;
                     result = notFoundEx.Message;
                     break;
-                case BusinessLogicException businessLogicEx:
+                case BadRequestException badRequestException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    result = badRequestException.Errors;
+                    break;
+                case AlreadyExistsException alreadyExistsEx:
                     statusCode = HttpStatusCode.Conflict;
-                    result = businessLogicEx.Message;
+                    result = alreadyExistsEx.Message;
+                    break;
+                case UnauthorizedException unauthorizedEx:
+                    statusCode = HttpStatusCode.Unauthorized;
+                    result = unauthorizedEx.Message;
                     break;
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
-                    result = "An unexpected error occurred.";
+                    result = exception.Message;
                     break;
             }
 

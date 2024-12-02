@@ -2,8 +2,5 @@
 
 namespace UserProfileService.Application.UseCases.Dish
 {
-    public class GetDishByIdQuery : IRequest<Domain.Entities.Dish>
-    {
-        public int Id { get; set; }
-    }
+    public record GetDishByIdQuery(int Id, int userId) : IRequest<Domain.Entities.Dish>;
 }

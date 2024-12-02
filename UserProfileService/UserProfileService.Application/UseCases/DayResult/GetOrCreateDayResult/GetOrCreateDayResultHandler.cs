@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using UserProfileService.Application.Exceptions;
 using UserProfileService.Domain.Interfaces;
 
 namespace UserProfileService.Application.UseCases.DayResult
@@ -17,6 +18,14 @@ namespace UserProfileService.Application.UseCases.DayResult
             GetOrCreateDayResultCommand request,
             CancellationToken cancellationToken)
         {
+            var profile = await _unitOfWork.ProfileRepository.GetByIdAsync(request.ProfileId);
+
+            if (profile == null)
+                throw new NotFoundException("Profile not found");
+
+            if (request.userId != profile!.UserId)
+                throw new UnauthorizedException("Owner isn't valid");
+
             var dayResult = await _unitOfWork.DayResultRepository
                 .GetByDateAsync(request.ProfileId, request.Date);
 

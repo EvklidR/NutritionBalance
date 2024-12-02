@@ -2,7 +2,7 @@
 
 namespace UserProfileService.Application.UseCases.Profile
 {
-    internal class GetUserProfilesQueryValidator : AbstractValidator<GetUserProfilesQuery>
+    public class GetUserProfilesQueryValidator : AbstractValidator<GetUserProfilesQuery>
     {
         public GetUserProfilesQueryValidator() 
         {

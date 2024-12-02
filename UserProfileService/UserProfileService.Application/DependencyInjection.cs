@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
-using EventsService.Application.Behaviors;
+using UserProfileService.Application.Behaviors;
 using MediatR;
 
 

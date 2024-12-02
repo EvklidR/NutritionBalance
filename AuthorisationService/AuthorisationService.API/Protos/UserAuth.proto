@@ -1,0 +1,17 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "AuthorisationService.Grpc";
+
+package userauth;
+
+service UserAuthService {
+  rpc CheckUserById (CheckUserByIdRequest) returns (CheckUserByIdResponse);
+}
+
+message CheckUserByIdRequest {
+  int32 id = 1;
+}
+
+message CheckUserByIdResponse {
+  bool exists = 1;
+}

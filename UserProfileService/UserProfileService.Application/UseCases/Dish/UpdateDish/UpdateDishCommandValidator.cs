@@ -8,7 +8,7 @@ namespace UserProfileService.Application.UseCases.Dish
         public UpdateDishCommandValidator(UpdateDishDTOValidator updateDishDTOValidator) 
         {
             RuleFor(x => x.Dish)
-                .NotEmpty()
+                .NotEmpty().WithMessage("Updating dish data must not be null.")
                 .SetValidator(updateDishDTOValidator);
         }
     }

@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using AutoMapper;
 using UserProfileService.Domain.Interfaces;
+using UserProfileService.Application.Exceptions;
+using UserProfileService.Domain.Entities;
 
 namespace UserProfileService.Application.UseCases.Dish
 {
@@ -19,10 +21,17 @@ namespace UserProfileService.Application.UseCases.Dish
         {
             var dish = await _unitOfWork.DishRepository.GetByIdAsync(request.Dish.Id);
             if (dish == null)
-                throw new KeyNotFoundException($"Dish with ID {request.Dish.Id} not found.");
+                throw new NotFoundException("Dish not found");
+
+            var profile = await _unitOfWork.ProfileRepository.GetByIdAsync(dish.ProfileId);
+
+            if (profile == null)
+                throw new NotFoundException("Profile not found");
+
+            if (request.userId != profile!.UserId)
+                throw new UnauthorizedException("Owner isn't valid");
 
             _mapper.Map(request.Dish, dish);
-            _unitOfWork.DishRepository.Update(dish);
             await _unitOfWork.SaveChangesAsync();
         }
     }

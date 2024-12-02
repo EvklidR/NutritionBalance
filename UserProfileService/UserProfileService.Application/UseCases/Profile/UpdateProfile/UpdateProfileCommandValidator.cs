@@ -9,6 +9,7 @@ namespace UserProfileService.Application.UseCases.Profile
         {
             RuleFor(x => x.ProfileDto)
                 .NotNull()
+                .WithMessage("Profile data is required.")
                 .SetValidator(updateValidator);
         }
     }

@@ -2,10 +2,9 @@
 using MediatR;
 using UserProfileService.Application.Exceptions;
 
-namespace EventsService.Application.Behaviors
+namespace UserProfileService.Application.Behaviors
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
     {
         private readonly IValidator<TRequest>? _validator;
 

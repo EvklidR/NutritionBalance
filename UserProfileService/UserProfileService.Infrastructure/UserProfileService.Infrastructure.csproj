@@ -9,12 +9,19 @@
   <ItemGroup>
     <ProjectReference Include="..\UserProfileService.Application\UserProfileService.Application.csproj" />
   </ItemGroup>
-
+	
   <ItemGroup>
-    <Folder Include="Services\" />
+	  <Protobuf Include="..\..\MealPlanService\MealPlanService.API\Protos\MealPlan.proto" GrpcServices="Client" />
+	  <Protobuf Include="..\..\AuthorisationService\AuthorisationService.API\Protos\UserAuth.proto" GrpcServices="Client" />
   </ItemGroup>
-
+	
   <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.29.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.67.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.67.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -25,6 +32,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.22" />
   </ItemGroup>
 
 </Project>

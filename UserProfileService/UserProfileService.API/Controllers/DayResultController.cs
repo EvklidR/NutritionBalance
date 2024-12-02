@@ -2,6 +2,8 @@
 using MediatR;
 using UserProfileService.Application.UseCases.DayResult;
 using UserProfileService.Application.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using UserProfileService.API.Filters;
 
 namespace UserProfileService.API.Controllers
 {
@@ -16,45 +18,62 @@ namespace UserProfileService.API.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _mediator.Send(new GetDayResultByIdQuery(id));
+            var userId = (int)HttpContext.Items["UserId"]!;
+            var result = await _mediator.Send(new GetDayResultByIdQuery(id, userId));
             return Ok(result);
         }
 
+        [Authorize]
+        [ServiceFilter(typeof(UserIdFilter))]
         [HttpGet("by-period")]
         public async Task<IActionResult> GetByPeriod(int profileId, DateOnly startDate, DateOnly endDate)
         {
-            var result = await _mediator.Send(new GetDayResultsByPeriodQuery(profileId, startDate, endDate));
+            var userId = (int)HttpContext.Items["UserId"]!;
+            var result = await _mediator.Send(new GetDayResultsByPeriodQuery(profileId, startDate, endDate, userId));
             return Ok(result);
         }
 
+        [Authorize]
+        [ServiceFilter(typeof(UserIdFilter))]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateDayResultDTO dto)
         {
-            var result = await _mediator.Send(new CreateDayResultCommand(dto));
+            var userId = (int)HttpContext.Items["UserId"]!;
+            var result = await _mediator.Send(new CreateDayResultCommand(dto, userId));
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
+        [Authorize]
+        [ServiceFilter(typeof(UserIdFilter))]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateDayResultDTO dto)
         {
-            var result = await _mediator.Send(new UpdateDayResultCommand(dto));
+            var userId = (int)HttpContext.Items["UserId"]!;
+            var result = await _mediator.Send(new UpdateDayResultCommand(dto, userId));
             return NoContent();
         }
 
+        [Authorize]
+        [ServiceFilter(typeof(UserIdFilter))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _mediator.Send(new DeleteDayResultCommand(id));
+            var userId = (int)HttpContext.Items["UserId"]!;
+            await _mediator.Send(new DeleteDayResultCommand(id, userId));
             return NoContent();
         }
 
-        [HttpGet("or-create")]
+        [Authorize]
+        [ServiceFilter(typeof(UserIdFilter))]
+        [HttpGet("get-or-create")]
         public async Task<IActionResult> GetOrCreate(int profileId, DateOnly date)
         {
-            var result = await _mediator.Send(new GetOrCreateDayResultCommand(profileId, date));
+            var userId = (int)HttpContext.Items["UserId"]!;
+            var result = await _mediator.Send(new GetOrCreateDayResultCommand(profileId, date, userId));
             return Ok(result);
         }
     }

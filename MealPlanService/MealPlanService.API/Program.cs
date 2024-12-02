@@ -1,6 +1,7 @@
 using MealPlanService.Infrastructure.DependencyInjection;
 using MealPlanService.Application.DependencyInjection;
 using MealPlanService.API.DependencyInjection;
+using MealPlanService.API.Middleware;
 
 public class Program
 {
@@ -15,6 +16,8 @@ public class Program
 
         var app = builder.Build();
 
+        app.MapGrpcService<MealPlanServiceImpl>();
+
         app.MapDefaultEndpoints();
 
         if (app.Environment.IsDevelopment())
@@ -23,9 +26,12 @@ public class Program
             app.UseSwaggerUI();
         }
 
+
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
+
         app.UseHttpsRedirection();
 
-        //app.UseAuthorization();
+        app.UseAuthorization();
 
 
         app.MapControllers();

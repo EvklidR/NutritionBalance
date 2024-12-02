@@ -84,8 +84,8 @@ namespace UserProfileService.Infrastructure.MSSQL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Calories")
-                        .HasColumnType("int");
+                    b.Property<double>("Calories")
+                        .HasColumnType("float");
 
                     b.Property<double>("Carbohydrates")
                         .HasColumnType("float");
@@ -100,7 +100,7 @@ namespace UserProfileService.Infrastructure.MSSQL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("int");
@@ -110,8 +110,7 @@ namespace UserProfileService.Infrastructure.MSSQL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfileId", "Name")
-                        .IsUnique();
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Food", "UserProfileServiceSchema");
 

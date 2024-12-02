@@ -28,10 +28,18 @@ namespace MealPlanService.API.Middleware
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             HttpStatusCode statusCode;
-            string result;
+            object result;
 
             switch (exception)
             {
+                case AlreadyExistsException alreadyExistsException:
+                    statusCode = HttpStatusCode.Conflict;
+                    result = alreadyExistsException.Message;
+                    break;
+                case BadRequestException badRequestException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    result = badRequestException.Errors;
+                    break;
                 case NotFoundException notFoundEx:
                     statusCode = HttpStatusCode.NotFound;
                     result = notFoundEx.Message;
@@ -40,9 +48,13 @@ namespace MealPlanService.API.Middleware
                     statusCode = HttpStatusCode.Conflict;
                     result = businessLogicEx.Message;
                     break;
+                case UnauthorizedException unauthorizedEx:
+                    statusCode = HttpStatusCode.Unauthorized;
+                    result = unauthorizedEx.Message;
+                    break;
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
-                    result = "An unexpected error occurred.";
+                    result = exception.Message;
                     break;
             }
 

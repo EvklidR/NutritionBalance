@@ -1,7 +1,8 @@
 ﻿using MediatR;
-using MealPlanService.Domain.Entities;
+using MealPlanService.Application.DTOs;
+using Microsoft.AspNetCore.Http;
 
 namespace MealPlanService.Application.UseCases
 {
-    public record UpdateMealPlanCommand(MealPlan MealPlan) : IRequest;
+    public record UpdateMealPlanCommand(UpdateMealPlanDTO MealPlan, int userId) : IRequest;
 }

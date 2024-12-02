@@ -19,6 +19,14 @@ namespace UserProfileService.Application.UseCases.DayResult
             if (dayResult == null)
                 throw new NotFoundException("DayResult not found");
 
+            var profile = await _unitOfWork.ProfileRepository.GetByIdAsync(dayResult.ProfileId);
+
+            if (profile == null)
+                throw new NotFoundException("Profile not found");
+
+            if (request.userId != profile!.UserId)
+                throw new UnauthorizedException("Owner isn't valid");
+
             _unitOfWork.DayResultRepository.Delete(dayResult);
             await _unitOfWork.SaveChangesAsync();
         }

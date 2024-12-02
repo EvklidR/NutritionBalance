@@ -11,8 +11,6 @@ namespace UserProfileService.Infrastructure.MSSQL.Configurations
             builder.HasDiscriminator<string>("FoodType")
                 .HasValue<Ingredient>("Ingredient")
                 .HasValue<Dish>("Dish");
-
-            builder.HasIndex(f => new { f.ProfileId, f.Name }).IsUnique();
         }
     }
 }

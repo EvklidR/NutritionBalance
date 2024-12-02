@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using FluentValidation;
-using MealPlanService.Application.UseCases;
+using MealPlanService.Application.Behaviors;
+using MediatR;
 
 namespace MealPlanService.Application.DependencyInjection
 {
@@ -12,8 +13,8 @@ namespace MealPlanService.Application.DependencyInjection
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
             return services;
 

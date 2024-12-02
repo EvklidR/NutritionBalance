@@ -5,11 +5,11 @@ namespace UserProfileService.Application.UseCases.Dish
 {
     public class CreateDishCommandValidator : AbstractValidator<CreateDishCommand>
     {
-        public CreateDishCommandValidator() 
+        public CreateDishCommandValidator(CreateDishDTOValidator createDishDTOValidator) 
         {
             RuleFor(x => x.Dish)
-                .NotEmpty()
-                .SetValidator(new CreateDishDTOValidator());
+                .NotEmpty().WithMessage("Creation dish data must not be null.")
+                .SetValidator(createDishDTOValidator);
         }
     }
 }

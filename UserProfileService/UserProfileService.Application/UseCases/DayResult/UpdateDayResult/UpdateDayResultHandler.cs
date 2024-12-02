@@ -23,6 +23,14 @@ namespace UserProfileService.Application.UseCases.DayResult
             if (dayResult == null)
                 throw new NotFoundException($"DayResult with Id {request.UpdateDayResultDTO.Id} not found.");
 
+            var profile = await _unitOfWork.ProfileRepository.GetByIdAsync(dayResult.ProfileId);
+
+            if (profile == null)
+                throw new NotFoundException("Profile not found");
+
+            if (request.userId != profile!.UserId)
+                throw new UnauthorizedException("Owner isn't valid");
+
             _mapper.Map(request.UpdateDayResultDTO, dayResult);
 
             _unitOfWork.DayResultRepository.Update(dayResult);

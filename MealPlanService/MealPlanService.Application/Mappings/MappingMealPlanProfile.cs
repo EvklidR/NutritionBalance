@@ -9,8 +9,9 @@ namespace MealPlanService.Application.Mappings
         public MappingMealPlanProfile()
         {
             CreateMap<MealPlanCreateDTO, MealPlan>();
-            CreateMap<MealPlanDayCreateDTO, MealPlanDay>();
-            CreateMap<NutrientOfDayCreateDTO, NutrientOfDay>();
+            CreateMap<UpdateMealPlanDTO, MealPlan>();
+            CreateMap<MealPlanDayDTO, MealPlanDay>();
+            CreateMap<NutrientOfDayDTO, NutrientOfDay>();
             CreateMap<MealPlan, MealPlan>();
         }
     }

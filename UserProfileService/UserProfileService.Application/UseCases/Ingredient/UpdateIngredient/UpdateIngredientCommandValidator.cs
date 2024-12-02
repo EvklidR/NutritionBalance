@@ -1,15 +1,15 @@
 ﻿using FluentValidation;
 using UserProfileService.Application.Validators;
-using UserProfileService.Application.UseCases.Ingredient.UpdateIngredient;
 
 namespace UserProfileService.Application.UseCases.Ingredient
 {
     public class UpdateIngredientCommandValidator : AbstractValidator<UpdateIngredientCommand>
     {
-        public UpdateIngredientCommandValidator() 
+        public UpdateIngredientCommandValidator(UpdateIngredientDTOValidator updateIngredientDTOValidator)
         {
-            RuleFor(x => x.IngredientDTO).NotEmpty()
-                .SetValidator(new UpdateIngredientDTOValidator());
+            RuleFor(x => x.IngredientDTO)
+                .NotEmpty().WithMessage("Ingredient data is required.")
+                .SetValidator(updateIngredientDTOValidator);
         }
     }
 }

@@ -1,10 +1,9 @@
 ﻿using FluentValidation;
-using MealPlanService.Domain.Entities;
-using MealPlanService.Domain.Enums;
+using MealPlanService.Application.DTOs;
 
 namespace MealPlanService.Application.Validators
 {
-    public class NutrientOfDayValidator : AbstractValidator<NutrientOfDay>
+    public class NutrientOfDayValidator : AbstractValidator<NutrientOfDayDTO>
     {
         public NutrientOfDayValidator()
         {

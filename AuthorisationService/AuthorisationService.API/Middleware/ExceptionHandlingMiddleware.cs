@@ -29,21 +29,21 @@ namespace AuthorisationService.Api.Middleware
         private static Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             HttpStatusCode statusCode;
-            string result;
+            object result;
 
             switch (exception)
             {
-                case AlreadyExistsException alreadyExistsEx:
+                case AlreadyExists alreadyExistsEx:
                     statusCode = HttpStatusCode.Conflict;
                     result = alreadyExistsEx.Message;
                     break;
-                case BadRequestException badRequestEx:
+                case BadRequest badRequestEx:
                     statusCode = HttpStatusCode.BadRequest;
-                    result = badRequestEx.Message;
+                    result = badRequestEx.Errors;
                     break;
-                case BadAuthorisationException notFoundEx:
+                case Unauthorized unauthorEx:
                     statusCode = HttpStatusCode.Unauthorized;
-                    result = notFoundEx.Message;
+                    result = unauthorEx.Message;
                     break;
                 default:
                     statusCode = HttpStatusCode.InternalServerError;

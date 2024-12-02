@@ -8,7 +8,7 @@ namespace UserProfileService.Application.UseCases.DayResult
         public UpdateDayResultCommandValidator(UpdateDayResultDTOValidator updateDayResultDTOValidator) 
         {
             RuleFor(x => x.UpdateDayResultDTO)
-                .NotEmpty()
+                .NotEmpty().WithMessage("Updating DayResult data must not be null.")
                 .SetValidator(updateDayResultDTOValidator);
         }
     }

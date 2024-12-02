@@ -3,13 +3,5 @@ using UserProfileService.Application.DTOs;
 
 namespace UserProfileService.Application.UseCases.Ingredient
 {
-    public class CreateIngredientCommand : IRequest<Domain.Entities.Ingredient>
-    {
-        public CreateIngredientDTO IngredientDTO { get; set; }
-
-        public CreateIngredientCommand(CreateIngredientDTO ingredientDTO)
-        {
-            IngredientDTO = ingredientDTO;
-        }
-    }
+    public record CreateIngredientCommand(CreateIngredientDTO IngredientDTO, int userId) : IRequest<Domain.Entities.Ingredient>;
 }

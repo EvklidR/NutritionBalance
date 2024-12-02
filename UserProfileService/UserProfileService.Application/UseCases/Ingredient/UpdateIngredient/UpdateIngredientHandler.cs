@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using UserProfileService.Application.Exceptions;
+using UserProfileService.Domain.Entities;
 using UserProfileService.Domain.Interfaces;
 
 namespace UserProfileService.Application.UseCases.Ingredient.UpdateIngredient
@@ -7,10 +9,12 @@ namespace UserProfileService.Application.UseCases.Ingredient.UpdateIngredient
     public class UpdateIngredientHandler : IRequestHandler<UpdateIngredientCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public UpdateIngredientHandler(IUnitOfWork unitOfWork)
+        public UpdateIngredientHandler(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task Handle(UpdateIngredientCommand request, CancellationToken cancellationToken)
@@ -19,10 +23,16 @@ namespace UserProfileService.Application.UseCases.Ingredient.UpdateIngredient
 
             if (ingredient == null)
                 throw new NotFoundException("Ingredient not found");
-            
 
+            var profile = await _unitOfWork.ProfileRepository.GetByIdAsync(ingredient.ProfileId);
 
-            _unitOfWork.IngredientRepository.Update(ingredient);
+            if (profile == null)
+                throw new NotFoundException("Profile not found");
+
+            if (request.userId != profile!.UserId)
+                throw new UnauthorizedException("Owner isn't valid");
+
+            _mapper.Map(request.IngredientDTO, ingredient);
             await _unitOfWork.SaveChangesAsync();
         }
     }

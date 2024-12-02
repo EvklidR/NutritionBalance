@@ -15,7 +15,6 @@ namespace UserProfileService.Application.Validators
                 .Must(d => d < DateOnly.FromDateTime(DateTime.Now))
                 .WithMessage("The date must be in the past.");
 
-            RuleForEach(dr => dr.Meals).SetValidator(new CreateMealDTOValidator());
         }
     }
 }

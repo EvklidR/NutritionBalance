@@ -8,7 +8,7 @@ namespace UserProfileService.Application.Validators
         public CreateProfileDTOValidator()
         {
             RuleFor(x => x.UserId)
-                .GreaterThan(0);
+                .GreaterThan(0).WithMessage("User id must be grater than 0");
 
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Name is required.")

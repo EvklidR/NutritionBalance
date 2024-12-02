@@ -1,9 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using AuthorisationService.Api.Filters;
 
 namespace AuthorisationService.Api.DependencyInjection
 {
@@ -11,6 +9,8 @@ namespace AuthorisationService.Api.DependencyInjection
     {
         public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddGrpc();
+
             var allowedOrigins = configuration.GetSection("AllowedOrigins:CorsOrigins").Get<string[]>();
             services.AddCors(options =>
             {
@@ -24,8 +24,6 @@ namespace AuthorisationService.Api.DependencyInjection
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
-
-            services.AddScoped<ValidateCreateUserDtoAttribute>();
 
             services.AddSwaggerGen(c =>
             {

@@ -5,11 +5,11 @@ namespace UserProfileService.Application.UseCases.Ingredient
 {
     public class CreateIngredientCommandValidator : AbstractValidator<CreateIngredientCommand>
     {
-        public CreateIngredientCommandValidator() 
+        public CreateIngredientCommandValidator(CreateIngredientDTOValidator createIngredientDTOValidator)
         {
             RuleFor(x => x.IngredientDTO)
-                .NotNull()
-                .SetValidator(new CreateIngredientDTOValidator());
+                .NotNull().WithMessage("Ingredient data is required.")
+                .SetValidator(createIngredientDTOValidator);
         }
     }
 }

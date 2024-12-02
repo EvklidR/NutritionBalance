@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using UserProfileService.Application.Exceptions;
+using UserProfileService.Domain.Entities;
 using UserProfileService.Domain.Interfaces;
 
 namespace UserProfileService.Application.UseCases.Profile
@@ -23,9 +24,20 @@ namespace UserProfileService.Application.UseCases.Profile
             if (profile == null)
                 throw new NotFoundException("Profile not found.");
 
-            _mapper.Map(request.ProfileDto, profile);
+            if (request.userId != profile!.UserId)
+                throw new UnauthorizedException("Owner isn't valid");
 
-            _unitOfWork.ProfileRepository.Update(profile);
+            var existingProfiles = await _unitOfWork.ProfileRepository.GetAllAsync(profile.UserId);
+
+            foreach (var prof in existingProfiles)
+            {
+                if (prof.Name == profile.Name)
+                {
+                    throw new AlreadyExistsException("Profile with this name in your account already exists");
+                }
+            }
+
+            _mapper.Map(request.ProfileDto, profile);
             await _unitOfWork.SaveChangesAsync();
         }
     }

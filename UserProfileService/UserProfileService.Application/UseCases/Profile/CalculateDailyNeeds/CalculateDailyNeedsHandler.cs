@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using UserProfileService.Application.Exceptions;
+using UserProfileService.Application.Interfaces;
 using UserProfileService.Application.Models;
+using UserProfileService.Domain.Entities;
 using UserProfileService.Domain.Enums;
 using UserProfileService.Domain.Interfaces;
 
@@ -9,10 +11,12 @@ namespace UserProfileService.Application.UseCases.Profile
     public class CalculateDailyNeedsHandler : IRequestHandler<CalculateDailyNeedsQuery, DailyNeedsResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMealPlanService _mealPlanService;
 
-        public CalculateDailyNeedsHandler(IUnitOfWork unitOfWork)
+        public CalculateDailyNeedsHandler(IUnitOfWork unitOfWork, IMealPlanService mealPlanService)
         {
             _unitOfWork = unitOfWork;
+            _mealPlanService = mealPlanService;
         }
 
         public async Task<DailyNeedsResponse> Handle(
@@ -26,6 +30,9 @@ namespace UserProfileService.Application.UseCases.Profile
                 throw new NotFoundException("Profile not found");
             }
 
+            if (request.userId != profile!.UserId)
+                throw new UnauthorizedException("Owner isn't valid");
+
             DailyNeedsResponse response;
 
             if (profile.MealPlanId == null) 
@@ -33,7 +40,11 @@ namespace UserProfileService.Application.UseCases.Profile
                 response = CalculateDailyMacros(profile);
             } else
             {
-                response = new DailyNeedsResponse();
+                response = await _mealPlanService.GetDailyNeedsByMealPlanAsync(
+                    (int)profile.MealPlanId,
+                    profile.Weight,
+                    CalculateDailyCalories(profile),
+                    profile.DateOfStartPlan.ToString());
             }
 
             return response;
@@ -62,20 +73,22 @@ namespace UserProfileService.Application.UseCases.Profile
         // Умножаем на коэффициент активности для получения суточной нормы калорий
         private double CalculateDailyCalories(Domain.Entities.Profile profile)
         {
-            return CalculateBMR(profile) * profile.ActivityLevel;
+            return Math.Round(CalculateBMR(profile) * profile.ActivityLevel, 2);
         }
+
 
         // Примерные пропорции КБЖУ (протеины, жиры, углеводы)
         private DailyNeedsResponse CalculateDailyMacros(Domain.Entities.Profile profile)
         {
             DailyNeedsResponse result = new DailyNeedsResponse();
             var calories = CalculateDailyCalories(profile);
-            result.Calories = calories;
-            result.Proteins = 0.3 * calories / 4; // 30% белков, 1 грамм белка = 4 ккал
-            result.Fats = 0.3 * calories / 9; // 30% жиров, 1 грамм жира = 9 ккал
-            result.Carbohydrates = 0.4 * calories / 4; // 40% углеводов, 1 грамм углеводов = 4 ккал
+            result.Calories = Math.Round(calories, 2);
+            result.Proteins = Math.Round(0.3 * calories / 4, 2);
+            result.Fats = Math.Round(0.3 * calories / 9, 2);
+            result.Carbohydrates = Math.Round(0.4 * calories / 4, 2);
             return result;
         }
+
 
         public int CalculateAge(DateOnly birthday)
         {

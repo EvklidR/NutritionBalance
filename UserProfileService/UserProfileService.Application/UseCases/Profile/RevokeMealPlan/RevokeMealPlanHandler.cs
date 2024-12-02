@@ -1,6 +1,7 @@
 ﻿using UserProfileService.Domain.Interfaces;
 using UserProfileService.Application.Exceptions;
 using MediatR;
+using UserProfileService.Domain.Entities;
 
 namespace UserProfileService.Application.UseCases.Profile
 {
@@ -16,6 +17,9 @@ namespace UserProfileService.Application.UseCases.Profile
             var profile = await _unitOfWork.ProfileRepository.GetByIdAsync(request.ProfileId);
             if (profile == null)
                 throw new NotFoundException("Profile not found");
+
+            if (request.userId != profile!.UserId)
+                throw new UnauthorizedException("Owner isn't valid");
 
             profile.MealPlanId = null;
             profile.DateOfStartPlan = null;
