@@ -23,21 +23,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MealPlanService", "MealPlan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MealPlanService.API", "MealPlanService\MealPlanService.API\MealPlanService.API.csproj", "{599E836F-DE76-4559-B069-96E375CAC619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlanService.Domain", "MealPlanService\MealPlanService.Domain\MealPlanService.Domain.csproj", "{2D6752FC-5D85-462A-86DB-A8B35FC0BC1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MealPlanService.Domain", "MealPlanService\MealPlanService.Domain\MealPlanService.Domain.csproj", "{2D6752FC-5D85-462A-86DB-A8B35FC0BC1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlanService.Application", "MealPlanService\MealPlanService.Application\MealPlanService.Application.csproj", "{6817958D-76EB-4803-AD30-176BA18DC5A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MealPlanService.Application", "MealPlanService\MealPlanService.Application\MealPlanService.Application.csproj", "{6817958D-76EB-4803-AD30-176BA18DC5A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MealPlanService.Infrastructure", "MealPlanService\MealPlanService.Infrastructure\MealPlanService.Infrastructure.csproj", "{39DA54FF-4411-4C53-A9BC-547FE3F5F767}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MealPlanService.Infrastructure", "MealPlanService\MealPlanService.Infrastructure\MealPlanService.Infrastructure.csproj", "{39DA54FF-4411-4C53-A9BC-547FE3F5F767}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserProfileService", "UserProfileService", "{4259AF66-6DB1-4A0C-8C8E-68D5FE81A18E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserProfileService.API", "UserProfileService\UserProfileService.API\UserProfileService.API.csproj", "{F2206A40-623F-4354-B9DC-695FC78ADA9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfileService.Application", "UserProfileService\UserProfileService.Application\UserProfileService.Application.csproj", "{75A0F6F7-D77B-4942-B264-BFF87500898A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserProfileService.Application", "UserProfileService\UserProfileService.Application\UserProfileService.Application.csproj", "{75A0F6F7-D77B-4942-B264-BFF87500898A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfileService.Domain", "UserProfileService\UserProfileService.Domain\UserProfileService.Domain.csproj", "{4C6511E5-7D50-4389-AC27-BBC783DBA295}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserProfileService.Domain", "UserProfileService\UserProfileService.Domain\UserProfileService.Domain.csproj", "{4C6511E5-7D50-4389-AC27-BBC783DBA295}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfileService.Infrastructure", "UserProfileService\UserProfileService.Infrastructure\UserProfileService.Infrastructure.csproj", "{AD9D2521-5BF8-4939-9BC4-47AF37171F42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserProfileService.Infrastructure", "UserProfileService\UserProfileService.Infrastructure\UserProfileService.Infrastructure.csproj", "{AD9D2521-5BF8-4939-9BC4-47AF37171F42}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "NutritionBalance.Client", "NutritionBalance.Client\NutritionBalance.Client.esproj", "{231F635F-ADD9-4F03-A4F8-0C36FE39BA08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,12 @@ Global
 		{AD9D2521-5BF8-4939-9BC4-47AF37171F42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD9D2521-5BF8-4939-9BC4-47AF37171F42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD9D2521-5BF8-4939-9BC4-47AF37171F42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{231F635F-ADD9-4F03-A4F8-0C36FE39BA08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{231F635F-ADD9-4F03-A4F8-0C36FE39BA08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{231F635F-ADD9-4F03-A4F8-0C36FE39BA08}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{231F635F-ADD9-4F03-A4F8-0C36FE39BA08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{231F635F-ADD9-4F03-A4F8-0C36FE39BA08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{231F635F-ADD9-4F03-A4F8-0C36FE39BA08}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

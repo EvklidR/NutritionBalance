@@ -15,7 +15,11 @@ namespace UserProfileService.Infrastructure.Grpc
             _client = new MealPlanService.Grpc.MealPlanService.MealPlanServiceClient(channel);
         }
 
-        public async Task<DailyNeedsResponse> GetDailyNeedsByMealPlanAsync(int mealPlanId, double bodyWeight, double dailyKcal, string startDate)
+        public async Task<DailyNeedsResponse> GetDailyNeedsByMealPlanAsync(
+            int mealPlanId,
+            double bodyWeight,
+            double dailyKcal,
+            string startDate)
         {
             var request = new GetKcalAndMacrosRequest
             {

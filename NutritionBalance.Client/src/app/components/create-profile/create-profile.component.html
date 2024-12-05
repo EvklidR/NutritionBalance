@@ -1,0 +1,15 @@
+<div class="create-profile">
+  <h2>Создание нового профиля</h2>
+  <form (submit)="onSubmit()">
+    <div>
+      <label for="profileName">Имя профиля:</label>
+      <input id="profileName" [(ngModel)]="profileName" name="profileName" required />
+    </div>
+    <div class="messages">
+      <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+      <p *ngIf="successMessage" class="success">{{ successMessage }}</p>
+    </div>
+    <button type="submit">Создать</button>
+    <button type="button" (click)="cancel()">Отмена</button>
+  </form>
+</div>

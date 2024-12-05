@@ -10,7 +10,8 @@ namespace AuthorisationService.Application.Mappings
         public UserProfileMapper()
         {
             CreateMap<CreateUserDto, User>()
-                .ForMember(dest => dest.HashedPassword, opt => opt.MapFrom(src => HashPassword(src.Password)));
+                .ForMember(dest => dest.HashedPassword, opt => opt.MapFrom(src => HashPassword(src.Password)))
+                .ForMember(dest => dest.Role, opt => opt.Ignore());
         }
 
         private string HashPassword(string password)

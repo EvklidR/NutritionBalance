@@ -9,8 +9,29 @@
           "Port": 7184
         }
       ],
-      "UpstreamPathTemplate": "/authorisation-service/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "UpstreamPathTemplate": "/authorisation-service/{everything}"
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7262
+        }
+      ],
+      "UpstreamPathTemplate": "/meal-plan-service/{everything}"
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7115
+        }
+      ],
+      "UpstreamPathTemplate": "/user-profile-service/{everything}"
     }
   ]
 }

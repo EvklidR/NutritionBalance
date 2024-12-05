@@ -19,6 +19,7 @@ namespace UserProfileService.API.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(UserIdFilter))]
         public async Task<IActionResult> CreateProfile([FromBody] CreateProfileDTO profileDto)
         {
             var userId = (int)HttpContext.Items["UserId"]!;
@@ -68,6 +69,17 @@ namespace UserProfileService.API.Controllers
         {
             var userId = (int)HttpContext.Items["UserId"]!;
             var query = new GetUserProfilesQuery(userId);
+            var result = await _mediator.Send(query);
+            return Ok(result);
+        }
+
+        [Authorize]
+        [ServiceFilter(typeof(UserIdFilter))]
+        [HttpGet("by-id/{profileId}")]
+        public async Task<IActionResult> GetUserById(int profileId)
+        {
+            var userId = (int)HttpContext.Items["UserId"]!;
+            var query = new GetProfileByIdQuery(profileId, userId);
             var result = await _mediator.Send(query);
             return Ok(result);
         }

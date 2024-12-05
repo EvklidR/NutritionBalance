@@ -3,7 +3,6 @@ using AuthorisationService.Domain.Interfaces;
 using AuthorisationService.Application.Models;
 using AuthorisationService.Application.Exceptions;
 using AuthorisationService.Application.Interfaces;
-using AuthorisationService.Application.UseCases;
 
 namespace AuthorisationService.Application.UseCases
 {

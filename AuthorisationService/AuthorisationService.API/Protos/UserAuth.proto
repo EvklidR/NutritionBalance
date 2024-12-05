@@ -6,6 +6,7 @@ package userauth;
 
 service UserAuthService {
   rpc CheckUserById (CheckUserByIdRequest) returns (CheckUserByIdResponse);
+  rpc MakeUserAdmin (MakeUserAdminRequest) returns (MakeUserAdminResponse);
 }
 
 message CheckUserByIdRequest {
@@ -14,4 +15,12 @@ message CheckUserByIdRequest {
 
 message CheckUserByIdResponse {
   bool exists = 1;
+}
+
+message MakeUserAdminRequest {
+  int32 userId = 1;
+}
+
+message MakeUserAdminResponse {
+  bool success = 1;
 }
