@@ -1,0 +1,26 @@
+<div class="modal-overlay" (click)="onClose()"></div>
+<div class="modal-content">
+  <h2>Ингредиенты блюда: {{ dishName }}</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Название</th>
+        <th>Масса (г)</th>
+        <th>Калории (ккал)</th>
+        <th>Белки (г)</th>
+        <th>Жиры (г)</th>
+        <th>Углеводы (г)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ingredient of ingredients">
+        <td>{{ ingredient.ingredient.name }}</td>
+        <td>{{ ingredient.weight }}</td>
+        <td>{{ ingredient.ingredient.calories }}</td>
+        <td>{{ ingredient.ingredient.proteins }}</td>
+        <td>{{ ingredient.ingredient.fats }}</td>
+        <td>{{ ingredient.ingredient.carbohydrates }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

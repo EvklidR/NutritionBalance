@@ -1,0 +1,34 @@
+<div class="ingredient-list">
+  <div class="header-buttons">
+    <button class="switch-button active">Ингредиенты</button>
+    <button class="switch-button dishes-btn" (click)="navigateToMeals()">Блюда</button>
+  </div>
+
+  <input type="text" class="filter-input" placeholder="Поиск ингредиентов..." [(ngModel)]="filterText" (input)="filterIngredients()" />
+
+  <button class="add-button" (click)="showAddIngredientModal = true">Добавить ингредиент</button>
+
+  <app-add-ingredient-modal *ngIf="showAddIngredientModal"
+                            (ingredientAdded)="loadIngredients()"
+                            (closeModal)="showAddIngredientModal = false">
+  </app-add-ingredient-modal>
+
+  <div *ngIf="isLoading" class="loading">Загрузка...</div>
+
+  <div *ngIf="!isLoading && filteredIngredients.length === 0" class="no-data">
+    <p>У вас пока нет ингредиентов.</p>
+  </div>
+
+  <div class="ingredients-container" *ngIf="!isLoading && filteredIngredients.length > 0">
+    <div class="ingredient-card" *ngFor="let ingredient of filteredIngredients">
+      <div class="ingredient-header">
+        <h3>{{ ingredient.name }}</h3>
+        <button class="delete-button" (click)="deleteIngredient(ingredient.id)">🗑️</button>
+      </div>
+      <p>Калории: {{ ingredient.calories }} ккал</p>
+      <p>Белки: {{ ingredient.proteins }} г</p>
+      <p>Жиры: {{ ingredient.fats }} г</p>
+      <p>Углеводы: {{ ingredient.carbohydrates }} г</p>
+    </div>
+  </div>
+</div>

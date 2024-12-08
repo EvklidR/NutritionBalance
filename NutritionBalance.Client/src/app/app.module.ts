@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { SidebarComponent } from './components/sideBar/sidebar.component';
 import { LoginComponent } from './components/login/login.component';
@@ -16,6 +17,12 @@ import { HomeComponent } from './components/home/home.component';
 import { ProfileSelectionComponent } from './components/profile-selection/profile-selection.component';
 import { CreateProfileComponent } from './components/create-profile/create-profile.component';
 import { MealDetailsModalComponent } from './components/meal-details-modal/meal-details-modal.component';
+import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import { ProfileIngredientsComponent } from './components/profile-ingredients/profile-ingredients.component';
+import { AddIngredientModalComponent } from './components/add-ingredient-modal/add-ingredient-modal.component';
+import { ProfileDishesComponent } from './components/profile-dishes/profile-dishes.component';
+import { AddDishModalComponent } from './components/add-dish-modal/add-dish-modal.component';
+import { DishIngredientsModalComponent } from './components/dish-ingredients-modal/dish-ingredients-modal.component'
 
 @NgModule({
   declarations: [
@@ -27,6 +34,13 @@ import { MealDetailsModalComponent } from './components/meal-details-modal/meal-
     ProfileSelectionComponent,
     CreateProfileComponent,
     MealDetailsModalComponent,
+    ProfileInfoComponent,
+    ProfileIngredientsComponent,
+    AddIngredientModalComponent,
+    ProfileDishesComponent,
+    AddDishModalComponent,
+    DishIngredientsModalComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -35,7 +49,8 @@ import { MealDetailsModalComponent } from './components/meal-details-modal/meal-
     FormsModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgxChartsModule
   ],
   providers: [
     {

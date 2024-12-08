@@ -1,0 +1,43 @@
+<div class="dish-list">
+  <div class="header-buttons">
+    <button class="switch-button ingr-btn" (click)="navigateToIngredients()">Ингредиенты</button>
+    <button class="switch-button active">Блюда</button>
+  </div>
+
+  <input type="text" class="filter-input" placeholder="Поиск блюд..." [(ngModel)]="filterText" (input)="filterDishes()" />
+
+  <button class="add-button" (click)="showAddDishModal = true">Добавить блюдо</button>
+
+  <app-add-dish-modal *ngIf="showAddDishModal"
+                      (dishAdded)="loadDishes()"
+                      (closeModal)="showAddDishModal = false">
+  </app-add-dish-modal>
+
+  <div *ngIf="isLoading" class="loading">Загрузка...</div>
+
+  <div *ngIf="!isLoading && filteredDishes.length === 0" class="no-data">
+    <p>У вас пока нет блюд.</p>
+  </div>
+
+  <div class="dishes-container" *ngIf="!isLoading && filteredDishes.length > 0">
+    <div class="dish-card" *ngFor="let dish of filteredDishes" (click)="openIngredientsModal(dish)">
+      <div class="dish-header">
+        <h3>{{ dish.name }}</h3>
+        <button class="delete-button" (click)="deleteDish(dish.id); $event.stopPropagation()">🗑️</button>
+      </div>
+      <p>Калории: {{ dish.calories }} ккал</p>
+      <p>Белки: {{ dish.proteins }} г</p>
+      <p>Жиры: {{ dish.fats }} г</p>
+      <p>Углеводы: {{ dish.carbohydrates }} г</p>
+    </div>
+
+
+
+  </div>
+</div>
+<!-- Модальное окно -->
+<app-dish-ingredients-modal *ngIf="showIngredientsModal"
+                            [ingredients]="selectedDishIngredients"
+                            [dishName]="selectedDishName"
+                            (closeModal)="closeIngredientsModal()">
+</app-dish-ingredients-modal>

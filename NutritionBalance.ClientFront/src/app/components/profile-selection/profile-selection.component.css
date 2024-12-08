@@ -1,0 +1,26 @@
+.profile-selection {
+  text-align: center;
+}
+
+.profile-list {
+  list-style: none;
+  padding: 0;
+}
+
+  .profile-list li {
+    margin: 10px 0;
+  }
+
+.create-profile-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #16a085;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+  .create-profile-btn:hover {
+    background-color: #1abc9c;
+  }

@@ -1,0 +1,60 @@
+<div class="modal-backdrop" (click)="closeModal.emit()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h2>Добавить новое блюдо</h2>
+
+    <div class="form-group">
+      <label for="dishName">Название блюда</label>
+      <input id="dishName" type="text" [(ngModel)]="name" />
+    </div>
+
+    <div class="form-group">
+      <label for="dishDescription">Описание</label>
+      <textarea id="dishDescription" [(ngModel)]="description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="dishPortions">Количество порций</label>
+      <input id="dishPortions" type="number" [(ngModel)]="amountOfPortions" />
+    </div>
+
+    <div class="form-group">
+      <label for="ingredientSelect">Добавить ингредиент</label>
+      <select id="ingredientSelect" [(ngModel)]="selectedIngredientId">
+        <option [ngValue]="null">Выберите ингредиент</option>
+        <option *ngFor="let ingredient of allIngredients" [ngValue]="ingredient.id">
+          {{ ingredient.name }}
+        </option>
+      </select>
+      <button class="add-button" (click)="addIngredient()">Добавить</button>
+    </div>
+
+    <div *ngIf="selectedIngredients.length > 0" class="ingredients-table">
+      <h3>Выбранные ингредиенты</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Название</th>
+            <th>Масса (г)</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ingredient of selectedIngredients">
+            <td>{{ getIngredientName(ingredient.ingredientId) }}</td>
+            <td>
+              <input type="number" [(ngModel)]="ingredient.weight" />
+            </td>
+            <td>
+              <button class="delete-button" (click)="removeIngredient(ingredient.ingredientId)">Удалить</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="modal-actions">
+      <button (click)="saveDish()" [disabled]="isSaving">Сохранить</button>
+      <button (click)="close()">Отмена</button>
+    </div>
+  </div>
+</div>

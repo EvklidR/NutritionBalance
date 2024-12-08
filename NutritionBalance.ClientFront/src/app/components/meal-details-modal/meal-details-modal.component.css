@@ -1,0 +1,58 @@
+.modal-header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+.modal-body {
+  padding: 20px;
+  background-color: #f9f9f9;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.main-wrapper {
+  width: max-content;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.food-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+  .food-table th, .food-table td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .food-table th {
+    background-color: #E7FFCA;
+    color: #333;
+  }
+
+  .food-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+.food-item {
+  background-color: #E7FFCA;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+  .food-item p {
+    margin: 0;
+    font-size: 14px;
+  }

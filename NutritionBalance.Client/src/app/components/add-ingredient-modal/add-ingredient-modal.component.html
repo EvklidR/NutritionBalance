@@ -1,0 +1,24 @@
+<div class="modal-backdrop" (click)="closeOnBackdropClick($event)">
+  <div class="modal-content" (click)="preventClose($event)">
+    <h2>Добавить новый ингредиент</h2>
+    <div class="form-group">
+      <label for="name">Название:</label>
+      <input id="name" [(ngModel)]="name" type="text" />
+    </div>
+    <div class="form-group">
+      <label for="proteins">Белки:</label>
+      <input id="proteins" [(ngModel)]="proteins" type="number" />
+    </div>
+    <div class="form-group">
+      <label for="fats">Жиры:</label>
+      <input id="fats" [(ngModel)]="fats" type="number" />
+    </div>
+    <div class="form-group">
+      <label for="carbohydrates">Углеводы:</label>
+      <input id="carbohydrates" [(ngModel)]="carbohydrates" type="number" />
+    </div>
+    <div class="modal-actions">
+      <button (click)="saveIngredient()" [disabled]="isSaving">Сохранить</button>
+    </div>
+  </div>
+</div>
