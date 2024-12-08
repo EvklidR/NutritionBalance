@@ -14,7 +14,9 @@ namespace UserProfileService.Infrastructure.Repositories
 
         public override async Task<DayResult?> GetByIdAsync(int id)
         {
-            return await _dbSet.Include(dr => dr.Meals)
+            return await _dbSet
+                .Where(d => d.Id == id)
+                .Include(dr => dr.Meals)
                 .ThenInclude(m => m.Foods)
                 .ThenInclude(f => f.Food)
                 .FirstOrDefaultAsync();

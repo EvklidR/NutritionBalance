@@ -20,6 +20,8 @@ namespace UserProfileService.API.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
+        [ServiceFilter(typeof(UserIdFilter))]
+
         public async Task<IActionResult> GetById(int id)
         {
             var userId = (int)HttpContext.Items["UserId"]!;

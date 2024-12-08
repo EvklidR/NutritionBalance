@@ -19,6 +19,7 @@ namespace UserProfileService.Application.UseCases.DayResult
             CancellationToken cancellationToken)
         {
             var dayResult = await _unitOfWork.DayResultRepository.GetByIdAsync(request.Id);
+
             if (dayResult == null)
                 throw new NotFoundException("DayResult not found");
 

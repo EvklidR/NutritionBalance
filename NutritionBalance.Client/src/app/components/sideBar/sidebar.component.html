@@ -1,18 +1,21 @@
 <div class="sidebar">
   <div class="sidebar-header">
     <h2>Nutrition Balance</h2>
-    <div class="current-user" (click)="toggleProfileList()">
-      <p>Текущий профиль:</p>
-      <p class="user-name">{{ currentUser?.name }}</p>
-      <div class="profile-list" *ngIf="showProfileList">
-        <ul>
-          <li *ngFor="let profile of profiles" (click)="selectProfile(profile)">
-            {{ profile.name }}
-          </li>
-          <li (click)="createProfile()">+ Создать новый профиль</li>
-        </ul>
+
+      <div class="current-user" (click)="toggleProfileList($event)">
+        <p class="user-name">
+          {{ (currentUser$ | async)?.name || 'Пользователь не выбран' }}
+        </p>
+        <div class="profile-list" *ngIf="showProfileList">
+          <ul>
+            <li *ngFor="let profile of (profiles$ | async)" (click)="selectProfile(profile, $event)">
+              {{ profile.name }}
+            </li>
+            <li (click)="createProfile()">+ Создать новый профиль</li>
+          </ul>
+        </div>
       </div>
-    </div>
+
   </div>
   <div class="sidebar-links">
     <ul>

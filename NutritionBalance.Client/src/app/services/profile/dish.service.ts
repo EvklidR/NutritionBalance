@@ -9,7 +9,7 @@ import { UpdateDishDTO } from '../../models/profile/DTOs/dish/update-dish.dto'
   providedIn: 'root',
 })
 export class DishService {
-  private apiUrl = `https://localhost:7078//user-profile-service//dish`;
+  private apiUrl = `https:/localhost:7078/user-profile-service/dish`;
 
   constructor(private http: HttpClient) { }
 

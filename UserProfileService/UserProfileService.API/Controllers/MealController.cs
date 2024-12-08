@@ -25,8 +25,8 @@ namespace UserProfileService.API.Controllers
         {
             var userId = (int)HttpContext.Items["UserId"]!;
             var command = new CreateMealCommand(createMealDTO, userId);
-            await _mediator.Send(command);
-            return CreatedAtAction(nameof(AddMeal), null);
+            var meal = await _mediator.Send(command);
+            return CreatedAtAction(nameof(AddMeal), meal);
         }
 
         [Authorize]

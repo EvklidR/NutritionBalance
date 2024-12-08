@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    const currentUser = JSON.parse(localStorage.getItem('currentProfile') || 'null');
+    const currentUser = localStorage.getItem('currentProfileId');
 
     if (!currentUser) {
       this.router.navigate(['/profile-selection']);

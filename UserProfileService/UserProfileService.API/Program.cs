@@ -17,6 +17,8 @@ public class Program
 
         var app = builder.Build();
 
+        app.UseCors("AllowSpecificOrigin");
+
         app.MapDefaultEndpoints();
         app.UseMiddleware<ExceptionHandlingMiddleware>();
 
@@ -25,7 +27,6 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
         app.UseAuthorization();
 
         app.UseHttpsRedirection();

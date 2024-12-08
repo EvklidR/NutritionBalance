@@ -31,7 +31,7 @@ namespace UserProfileService.Application.UseCases.Profile
 
             foreach (var prof in existingProfiles)
             {
-                if (prof.Name == profile.Name)
+                if ((prof.Name == profile.Name) && (prof != profile))
                 {
                     throw new AlreadyExistsException("Profile with this name in your account already exists");
                 }

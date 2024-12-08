@@ -4,6 +4,6 @@
 
 .main-content {
   flex-grow: 1;
-  padding: 20px;
-  background-color: #ecf0f1;
+  padding: 0 20px;
+  background-color: rgba(96, 96, 96, 0.2);
 }

@@ -9,7 +9,7 @@ import { UpdateIngredientDTO } from '../../models/profile/DTOs/ingredient/update
   providedIn: 'root',
 })
 export class IngredientService {
-  private apiUrl = `https://localhost:7078//user-profile-service//ingredient`;
+  private apiUrl = `https:/localhost:7078/user-profile-service/ingredient`;
 
   constructor(private http: HttpClient) { }
 

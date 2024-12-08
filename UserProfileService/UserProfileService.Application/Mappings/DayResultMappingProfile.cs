@@ -10,6 +10,7 @@ namespace UserProfileService.Application.Mappings
         {
             CreateMap<UpdateDayResultDTO, DayResult>()
                 .ForMember(dest => dest.ProfileId, opt => opt.Ignore())
+                .ForMember(dest => dest.Date, opt => opt.Ignore())
                 .ForMember(dest => dest.ActivityLevel, opt => opt.MapFrom(src => GetActivityMultiplier(src.ActivityLevel)));
 
 
@@ -30,7 +31,7 @@ namespace UserProfileService.Application.Mappings
                 .ForMember(dest => dest.MealId, opt => opt.Ignore())
                 .ForMember(dest => dest.Food, opt => opt.Ignore());
         }
-        public double GetActivityMultiplier(ActivityLevel? activityLevel)
+        public double? GetActivityMultiplier(ActivityLevel? activityLevel)
         {
             return activityLevel switch
             {
@@ -38,8 +39,10 @@ namespace UserProfileService.Application.Mappings
                 ActivityLevel.low => 1.375,
                 ActivityLevel.medium => 1.55,
                 ActivityLevel.high => 1.725,
-                ActivityLevel.veryHigh => 1.9
+                ActivityLevel.veryHigh => 1.9,
+                null => null
             };
         }
+
     }
 }

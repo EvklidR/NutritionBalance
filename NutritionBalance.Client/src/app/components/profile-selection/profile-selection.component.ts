@@ -28,9 +28,8 @@ export class ProfileSelectionComponent implements OnInit {
     });
   }
 
-  selectProfile(profileId: number): void {
-    console.log(`Выбран профиль: ${profileId}`);
-    localStorage.setItem('currentProfile', profileId.toString());
+  selectProfile(profile: Profile): void {
+    this.profileService.setCurrentProfile(profile);
     this.router.navigate(['/home']);
   }
 

@@ -16,6 +16,8 @@ public class Program
 
         var app = builder.Build();
 
+        app.UseCors("AllowSpecificOrigin");
+
         app.MapGrpcService<MealPlanServiceImpl>();
 
         app.MapDefaultEndpoints();

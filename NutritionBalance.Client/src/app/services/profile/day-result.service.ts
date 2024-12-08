@@ -9,7 +9,7 @@ import { DayResult } from '../../models/profile/entities/day-result.model'
   providedIn: 'root',
 })
 export class DayResultService {
-  private apiUrl = `https://localhost:7078/user-profile-service/dayResult`;
+  private apiUrl = `https:/localhost:7078/user-profile-service/dayResult`;
 
   constructor(private http: HttpClient) { }
 

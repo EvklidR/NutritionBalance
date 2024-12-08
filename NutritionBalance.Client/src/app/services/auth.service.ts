@@ -38,22 +38,6 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
   }
 
-  logout(): void {
-    this.revokeToken().subscribe({
-      next: () => {
-        this.router.navigate(['/login']); // Перенаправление после успешного отзыва токена
-      },
-      error: (error) => {
-        console.error('Ошибка при попытке отозвать токен:', error);
-        this.router.navigate(['/login']); // Перенаправление даже при ошибке
-      },
-      complete: () => {
-        this.removeTokens(); // Удаляем токены из локального хранилища
-      }
-    });
-  }
-
-
   isAuthenticated(): boolean {
     const token = localStorage.getItem('accessToken');
     return !!token;
@@ -73,21 +57,25 @@ export class AuthService {
 
   register(command: CreateUserDto): Observable<any> {
     const payload = { CreateUserDto: command };
-    return this.http.post(`${this.baseUrl}/auth/register`, payload);
-  }
-
-
-  checkUserById(id: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/auth/check_user_by_id/${id}`);
+    return this.http.post(`${this.baseUrl}/auth/register`, payload).pipe(
+      map((response: any) => {
+        if (response?.accessToken && response?.refreshToken) {
+          this.setAccessToken(response.accessToken);
+          this.setRefreshToken(response.refreshToken);
+        }
+        return response;
+      })
+    );
   }
 
   refreshToken(): Observable<any> {
     const refreshToken = this.getRefreshToken();
-    if (!refreshToken) {
-      throw new Error('Refresh token is missing');
-    }
+    const accessToken = this.getAccessToken();
 
-    return this.http.post(`${this.baseUrl}/token/refresh`, { refreshToken }).pipe(
+    return this.http.post(`${this.baseUrl}/token/refresh`, {
+      refreshToken,
+      accessToken
+    }).pipe(
       map((response: any) => {
         if (response.accessToken && response.refreshToken) {
           this.setAccessToken(response.accessToken);
@@ -100,11 +88,13 @@ export class AuthService {
 
   revokeToken(): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/token/revoke`, {}).pipe(
-      tap(() => this.removeTokens()),
-      catchError((error) => {
-        console.error('Ошибка при попытке отозвать токен:', error);
-        return throwError(() => new Error('Не удалось отозвать токен. Попробуйте снова.'));
-      })
+      tap(() => this.removeTokens())
     );
+  }
+
+  logout(): void {
+    this.revokeToken()
+    this.removeTokens()
+    this.router.navigate(['/login']);
   }
 }

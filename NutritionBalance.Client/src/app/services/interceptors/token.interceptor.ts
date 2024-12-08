@@ -11,6 +11,10 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const accessToken = localStorage.getItem('accessToken');
 
+    if (request.url.includes('/token/refresh')) {
+      return next.handle(request);
+    }
+
     if (accessToken) {
       request = request.clone({
         setHeaders: {
@@ -35,7 +39,7 @@ export class TokenInterceptor implements HttpInterceptor {
               return next.handle(request);
             }),
             catchError((err) => {
-              //this.authService.logout();
+              this.authService.logout();
               return throwError(err);
             })
           );
@@ -45,3 +49,4 @@ export class TokenInterceptor implements HttpInterceptor {
     );
   }
 }
+

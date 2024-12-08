@@ -4,48 +4,403 @@
 
 .header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 30px 0 60px;
+  justify-content: space-around;
 }
 
-  .header h1 {
-    margin-bottom: 10px;
-    font-size: 24px;
+.calories-circle-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calories-circle {
+  transform: rotate(-90deg);
+}
+
+.circle-background {
+  fill: none;
+  stroke: #E7FFCA;
+  stroke-width: 13;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: #3D8E31;
+  stroke-width: 13;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.3s ease;
+}
+
+.calories-circle-info {
+  position: absolute;
+  text-align: center;
+}
+
+  .calories-circle-info h2 {
+    font-size: 41px;
+    margin: 0;
     color: #333;
   }
 
-.buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  .calories-circle-info p {
+    font-size: 16px;
+    color: #666;
+  }
+
+.water-info {
+  flex: 1;
+  font-size: 18px;
+  margin-top: 20px;
+  text-align: center;
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  .water-info > p {
+    margin: 0;
+  }
+
+.water-info-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.change-water-goal,
+.drink-water {
+  padding: 8px 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
 }
 
-  button:hover {
-    background-color: #0056b3;
-  }
+.change-water-goal {
+  background-color: #C7FF82;
+}
 
-.content {
-  text-align: center;
+.drink-water {
+  background-color: #8BDE33;
+}
+
+
+
+.add-meal {
+  display: flex;
   margin-top: 20px;
 }
 
-  .content h2 {
-    font-size: 22px;
-    color: #555;
+  .add-meal button {
+    padding: 10px 20px;
+    background-color: #D3D347;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
   }
 
-  .content p {
-    font-size: 16px;
-    color: #666;
+    .add-meal button:hover {
+      background-color: #E0E080;
+    }
+
+
+.day-result ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+  .day-result ul li {
+    border-radius: 5px;
+    min-width: 200px;
+    height: 150px;
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #E7FFCA;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+.meal-container {
+  text-align: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: #d9534f;
+  cursor: pointer;
+}
+
+  .delete-btn:hover {
+    color: #b52b24;
+  }
+
+.meal-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.meal-nutrients p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+
+.nutrient-info {
+  flex: 1;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+  padding-left: 20px;
+}
+
+.nutrient {
+  margin: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+  .nutrient p {
+    margin: 0;
+  }
+
+.nutrient-bar {
+  width: 50%;
+  height: 10px;
+  background-color: #E7FFCA;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  margin: 5px 0;
+}
+
+.nutrient-bar-fill {
+  height: 100%;
+  background-color: #8BDE33;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.products-wrapper {
+  display: flex;
+  flex: 1;
+  background-color: snow;
+  border-radius: 10px;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.meal-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 5px;
+}
+
+.meal-name input {
+  margin: 0 15px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.modal-content {
+  background-color: #E7FFCA;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  width: 90%;
+  justify-content: flex-start;
+  height: 70%;
+  overflow: overlay;
+}
+
+.modal-section {
+  flex: 1;
+  margin: 30px;
+}
+
+.item-list {
+  margin-bottom: 20px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item span {
+  flex: 1;
+}
+
+.item input {
+  width: 80px;
+  margin: 0 10px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.dropdown {
+  margin-top: 10px;
+  background-color: #FFFFFF;
+  border: 1px solid #CCCCCC;
+  border-radius: 5px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown li:hover {
+  background-color: #F0F0F0;
+}
+
+.modal-footer {
+  text-align: center;
+}
+
+.add-meal-btn {
+  background-color: #D3D347;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #909090;
+}
+
+.add-btn {
+  background-color: transparent;
+  border: 2px solid #28a745; /* Зеленый ободок */
+  color: #28a745; /* Зеленый цвет знака + */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 0; /* Чтобы знак + был ровно по центру */
+}
+
+.add-btn:hover {
+  background-color: #28a745; /* Заливка зеленым при наведении */
+  color: white; /* Белый знак + */
+}
+
+.delete-btn {
+  background-color: transparent;
+  border: none;
+  color: black;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn:hover {
+  color: #d9534f; /* Красный цвет при наведении */
+}
+
+.no-items {
+  font-size: 14px;
+  color: #6c757d; /* Серый цвет */
+  margin-bottom: 10px;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
+}
+
+.header-name {
+  flex: 1;
+  text-align: left;
+}
+
+.header-quantity {
+  width: 80px;
+  text-align: center;
+}
+
+.section-header {
+  margin-top: 0;
+  font-size: 20px;
+}
+.gradient-bar {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(61, 61, 61, 0) 0%, #3D3D3D 50%, rgba(61, 61, 61, 0) 100%);
+}
+.delete-meal-btn {
+  position: absolute; /* Абсолютное позиционирование */
+  top: 10px; /* Отступ сверху */
+  right: 10px; /* Отступ справа */
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+  .delete-meal-btn:hover {
+    color: #ff4c4c;
   }

@@ -4,6 +4,6 @@ export class UpdateDishDTO {
   id!: number;
   name!: string;
   description?: string;
-  amountOfPortions: number;
+  amountOfPortions: number = 0;
   ingredients: IngredientOfDishDTO[] = [];
 }

@@ -6,7 +6,7 @@ using UserProfileService.Domain.Entities;
 
 namespace UserProfileService.Application.UseCases.Meal
 {
-    public class CreateMealHandler : IRequestHandler<CreateMealCommand>
+    public class CreateMealHandler : IRequestHandler<CreateMealCommand, Domain.Entities.Meal>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace UserProfileService.Application.UseCases.Meal
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task Handle(CreateMealCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.Entities.Meal> Handle(CreateMealCommand request, CancellationToken cancellationToken)
         {
             var day = await _unitOfWork.DayResultRepository.GetByIdAsync(request.CreateMealDTO.DayResultId);
             if (day == null) 
@@ -35,6 +35,8 @@ namespace UserProfileService.Application.UseCases.Meal
             var createMeal = _mapper.Map<Domain.Entities.Meal>(request.CreateMealDTO);
             day.Meals.Add(createMeal);
             await _unitOfWork.SaveChangesAsync();
+
+            return createMeal;
         }
     }
 }
