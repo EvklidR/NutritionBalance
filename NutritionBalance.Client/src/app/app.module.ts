@@ -22,7 +22,8 @@ import { ProfileIngredientsComponent } from './components/profile-ingredients/pr
 import { AddIngredientModalComponent } from './components/add-ingredient-modal/add-ingredient-modal.component';
 import { ProfileDishesComponent } from './components/profile-dishes/profile-dishes.component';
 import { AddDishModalComponent } from './components/add-dish-modal/add-dish-modal.component';
-import { DishIngredientsModalComponent } from './components/dish-ingredients-modal/dish-ingredients-modal.component'
+import { DishIngredientsModalComponent } from './components/dish-ingredients-modal/dish-ingredients-modal.component';
+import { MealPlansComponent } from './components/meal-plans/meal-plans.component'
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { DishIngredientsModalComponent } from './components/dish-ingredients-mod
     ProfileDishesComponent,
     AddDishModalComponent,
     DishIngredientsModalComponent,
+    MealPlansComponent,
     
   ],
   imports: [

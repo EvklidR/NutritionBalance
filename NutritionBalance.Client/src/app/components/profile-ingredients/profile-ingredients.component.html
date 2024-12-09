@@ -9,9 +9,11 @@
   <button class="add-button" (click)="showAddIngredientModal = true">Добавить ингредиент</button>
 
   <app-add-ingredient-modal *ngIf="showAddIngredientModal"
-                            (ingredientAdded)="loadIngredients()"
+                            [profileId]="profileId"
+                            (ingredientAdded)="onIngredientAdded($event)"
                             (closeModal)="showAddIngredientModal = false">
   </app-add-ingredient-modal>
+
 
   <div *ngIf="isLoading" class="loading">Загрузка...</div>
 

@@ -15,6 +15,7 @@ import { IngredientOfDish } from '../../models/profile/entities/ingredient-of-di
 })
 export class ProfileDishesComponent implements OnInit {
   profile!: Profile | null;
+  profileId: number = 0;
   private profileSubscription!: Subscription;
 
   filterText: string = ''; // Поле для ввода текста фильтрации
@@ -40,8 +41,8 @@ export class ProfileDishesComponent implements OnInit {
 
     this.profileSubscription = this.profileService.currentProfile$.subscribe((profile) => {
       this.profile = profile;
-
       if (profile) {
+        this.profileId = profile.id;
         this.loadDishes();
       }
     });
@@ -51,7 +52,7 @@ export class ProfileDishesComponent implements OnInit {
     this.dishService.getAllDishes(this.profile!.id).subscribe(
       (data: Dish[]) => {
         this.dishes = data;
-        this.filteredDishes = data; // Изначально отображаем все блюда
+        this.filteredDishes = data;
         this.isLoading = false;
       },
       (error) => {
@@ -87,23 +88,27 @@ export class ProfileDishesComponent implements OnInit {
     );
   }
 
-  // Добавлено для модального окна
   selectedDishIngredients: IngredientOfDish[] = [];
-  selectedDishName: string = '';
+  selectedDish: Dish = new Dish;;
   showIngredientsModal: boolean = false;
 
   openIngredientsModal(dish: Dish) {
     this.dishService.getDishById(dish.id).subscribe(
       (d) => {
         this.selectedDishIngredients = d.ingredients;
-        this.selectedDishName = d.name;
+        this.selectedDish = d;
         this.showIngredientsModal = true;
       }
     )
 
   }
 
-  closeIngredientsModal() {
+  onDishAdded(newDish: Dish): void {
+    this.dishes.push(newDish);
+    this.filterDishes();
+  }
+
+  closeModal() {
     this.showIngredientsModal = false;
   }
 

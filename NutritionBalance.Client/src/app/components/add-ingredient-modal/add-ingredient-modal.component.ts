@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { IngredientService } from '../../services/profile/ingredient.service';
 import { CreateIngredientDTO } from '../../models/profile/DTOs/ingredient/create-ingredient.dto';
-
+import { Ingredient } from '../../models/profile/entities/ingredient.model'
 
 @Component({
   selector: 'app-add-ingredient-modal',
@@ -9,7 +9,8 @@ import { CreateIngredientDTO } from '../../models/profile/DTOs/ingredient/create
   styleUrls: ['./add-ingredient-modal.component.css'],
 })
 export class AddIngredientModalComponent {
-  @Output() ingredientAdded = new EventEmitter<void>();
+  @Input() profileId: number = 0;
+  @Output() ingredientAdded = new EventEmitter<Ingredient>();
   @Output() closeModal = new EventEmitter<void>();
 
   name: string = '';
@@ -28,7 +29,7 @@ export class AddIngredientModalComponent {
     }
 
     const newIngredient: CreateIngredientDTO = {
-      profileId: 1,
+      profileId: this.profileId,
       name: this.name,
       proteins: this.proteins,
       fats: this.fats,
@@ -38,9 +39,9 @@ export class AddIngredientModalComponent {
     this.isSaving = true;
 
     this.ingredientService.createIngredient(newIngredient).subscribe(
-      () => {
+      (createdIngredient: Ingredient) => {
         this.isSaving = false;
-        this.ingredientAdded.emit();
+        this.ingredientAdded.emit(createdIngredient);
         this.closeModal.emit();
       },
       (error) => {
@@ -49,6 +50,7 @@ export class AddIngredientModalComponent {
       }
     );
   }
+
 
   closeOnBackdropClick(event: MouseEvent): void {
     this.closeModal.emit();

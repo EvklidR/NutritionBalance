@@ -1,6 +1,6 @@
 <div class="modal-overlay" (click)="onClose()"></div>
 <div class="modal-content">
-  <h2>Ингредиенты блюда: {{ dishName }}</h2>
+  <h2>Ингредиенты блюда: {{ dish.name }}</h2>
   <table>
     <thead>
       <tr>
@@ -23,4 +23,6 @@
       </tr>
     </tbody>
   </table>
+  <h2>Описание блюда: </h2>
+  <p>{{ dish.description }}</p>
 </div>

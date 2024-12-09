@@ -92,6 +92,15 @@ public class MealPlanController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize]
+    [HttpGet("by-id/{id}")]
+    public async Task<ActionResult<MealPlan>> GetMealPlansById(int id)
+    {
+        var query = new GetMealPlanByIdQuery(id);
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
     [HttpGet("calculate-kcal")]
     public async Task<ActionResult> CalculateKcalAndMacros([FromQuery] GetKcalAndMacrosQuery query)
     {

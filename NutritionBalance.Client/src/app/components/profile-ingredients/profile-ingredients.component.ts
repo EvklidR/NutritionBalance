@@ -14,9 +14,10 @@ import { Subscription } from 'rxjs';
 })
 export class ProfileIngredientsComponent implements OnInit {
   profile!: Profile | null;
+  profileId: number = 0;
   private profileSubscription!: Subscription;
 
-  filterText: string = ''; // Поле для ввода текста фильтрации
+  filterText: string = '';
   filteredIngredients: Ingredient[] = [];
 
   showAddIngredientModal: boolean = false;
@@ -39,8 +40,9 @@ export class ProfileIngredientsComponent implements OnInit {
 
     this.profileSubscription = this.profileService.currentProfile$.subscribe((profile) => {
       this.profile = profile;
-
+      
       if (profile) {
+        this.profileId = profile.id
         this.loadIngredients();
       }
     });
@@ -50,7 +52,7 @@ export class ProfileIngredientsComponent implements OnInit {
     this.ingredientService.getIngredients(this.profile!.id).subscribe(
       (data: Ingredient[]) => {
         this.ingredients = data;
-        this.filteredIngredients = data; // Изначально отображаем все ингредиенты
+        this.filteredIngredients = data;
         this.isLoading = false;
       },
       (error) => {
@@ -61,14 +63,14 @@ export class ProfileIngredientsComponent implements OnInit {
   }
 
   navigateToMeals(): void {
-    this.router.navigate(['/dishes']); // Обновите маршрут, если необходимо
+    this.router.navigate(['/dishes']);
   }
 
   deleteIngredient(id: number): void {
     this.isLoading = true;
     this.ingredientService.deleteIngredient(id).subscribe(
       () => {
-        this.ingredients = this.ingredients.filter(ingredient => ingredient.id !== id); // Убираем удаленный элемент из списка
+        this.ingredients = this.ingredients.filter(ingredient => ingredient.id !== id);
         this.isLoading = false;
       },
       (error) => {
@@ -76,6 +78,11 @@ export class ProfileIngredientsComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  onIngredientAdded(newIngredient: Ingredient): void {
+    this.ingredients.push(newIngredient);
+    this.filterIngredients();
   }
 
   filterIngredients(): void {

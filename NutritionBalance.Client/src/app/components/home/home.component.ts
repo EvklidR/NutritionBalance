@@ -262,6 +262,7 @@ export class HomeComponent implements OnInit {
       for (const prod of this.selectedIngredients) {
         this.mealToCreate.foods.push({ foodId: prod.ingredient.id, weight: prod.weight })
       }
+
       this.mealToCreate.dayResultId = this.dayResult.id;
       
       this.mealService.addMeal(this.mealToCreate).subscribe(
@@ -305,7 +306,8 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  removeMeal(mealId: number): void {
+  removeMeal(mealId: number, event: Event): void {
+    event.stopPropagation();
     if (this.dayResult) {
       this.mealService.deleteMeal(mealId, this.dayResult.id).subscribe(
         () => {

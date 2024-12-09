@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { DishService } from '../../services/profile/dish.service';
 import { CreateDishDTO } from '../../models/profile/DTOs/dish/create-dish.dto';
 import { IngredientOfDishDTO } from '../../models/profile/DTOs/dish/ingredient-of-dish.dto';
 import { Ingredient } from '../../models/profile/entities/ingredient.model'; // Модель ингредиента
 import { IngredientService } from '../../services/profile/ingredient.service'; // Сервис ингредиентов
+import { Dish } from '../../models/profile/entities/dish.model'
 
 @Component({
   selector: 'app-add-dish-modal',
@@ -11,7 +12,8 @@ import { IngredientService } from '../../services/profile/ingredient.service'; /
   styleUrls: ['./add-dish-modal.component.css']
 })
 export class AddDishModalComponent {
-  @Output() dishesAdded = new EventEmitter<void>();
+  @Input() profileId: number = 0;
+  @Output() dishAdded = new EventEmitter<Dish>();
   @Output() closeModal = new EventEmitter<void>();
 
   name: string = '';
@@ -33,8 +35,7 @@ export class AddDishModalComponent {
   ) { }
 
   ngOnInit(): void {
-    // Загрузка всех доступных ингредиентов
-    this.ingredientService.getIngredients(1).subscribe(
+    this.ingredientService.getIngredients(this.profileId).subscribe(
       (data: Ingredient[]) => {
         this.allIngredients = data;
       },
@@ -47,20 +48,17 @@ export class AddDishModalComponent {
   addIngredient(): void {
     if (!this.selectedIngredientId) return;
 
-    // Проверка на дублирование
     const exists = this.selectedIngredients.some(ing => ing.ingredientId === this.selectedIngredientId);
     if (exists) {
       alert('Этот ингредиент уже добавлен.');
       return;
     }
-
-    // Добавление нового ингредиента в таблицу
+    
     this.selectedIngredients.push({
       ingredientId: this.selectedIngredientId,
-      weight: 0 // Значение по умолчанию
+      weight: 50
     });
 
-    // Сброс выбора
     this.selectedIngredientId = null;
   }
 
@@ -80,7 +78,7 @@ export class AddDishModalComponent {
     }
 
     const newDish: CreateDishDTO = {
-      profileId: 1,
+      profileId: this.profileId,
       name: this.name,
       description: this.description || '',
       amountOfPortions: this.amountOfPortions,
@@ -90,9 +88,10 @@ export class AddDishModalComponent {
     this.isSaving = true;
 
     this.dishService.createDish(newDish).subscribe(
-      () => {
+      (dish) => {
         this.isSaving = false;
-        this.dishesAdded.emit();
+        console.log(dish)
+        this.dishAdded.emit(dish);
         this.closeModal.emit();
       },
       (error) => {
@@ -101,9 +100,11 @@ export class AddDishModalComponent {
       }
     );
   }
+
   preventClose(event: MouseEvent): void {
     event.stopPropagation();
   }
+
   close(): void {
     this.closeModal.emit();
   }

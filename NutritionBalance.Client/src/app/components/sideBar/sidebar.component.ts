@@ -44,10 +44,10 @@ export class SidebarComponent implements OnInit {
   }
 
   selectProfile(profile: Profile, event: MouseEvent): void {
-    event.stopPropagation(); // Останавливаем распространение события
+    event.stopPropagation();
 
     this.profileService.setCurrentProfile(profile);
-    this.showProfileList = false; // Закрыть список после выбора
+    this.showProfileList = false;
   }
 
 

@@ -95,6 +95,7 @@ export class AuthService {
   logout(): void {
     this.revokeToken()
     this.removeTokens()
+    localStorage.removeItem('currentProfileId');
     this.router.navigate(['/login']);
   }
 }

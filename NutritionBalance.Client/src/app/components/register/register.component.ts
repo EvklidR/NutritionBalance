@@ -25,8 +25,7 @@ export class RegisterComponent {
 
     this.authService.register({ email: this.email, login: this.login, password: this.password }).subscribe({
       next: () => {
-        this.successMessage = 'Регистрация успешна! Пожалуйста, войдите.';
-        this.errorMessage = '';
+        this.router.navigate(['/']);
       },
       error: (error) => {
         this.errorMessage = 'Ошибка при регистрации, попробуйте снова!';

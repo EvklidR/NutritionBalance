@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IngredientOfDish } from '../../models/profile/entities/ingredient-of-dish.model';
+import { Dish } from '../../models/profile/entities/dish.model'
 
 @Component({
   selector: 'app-dish-ingredients-modal',
@@ -8,7 +9,7 @@ import { IngredientOfDish } from '../../models/profile/entities/ingredient-of-di
 })
 export class DishIngredientsModalComponent {
   @Input() ingredients: IngredientOfDish[] = [];
-  @Input() dishName: string = '';
+  @Input() dish: Dish = new Dish();
   @Output() closeModal = new EventEmitter<void>();
 
   onClose() {

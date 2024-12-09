@@ -15,8 +15,7 @@ namespace MealPlanService.Application.Validators
                 .MaximumLength(100).WithMessage("Name cannot be longer than 100 characters.");
 
             RuleFor(mp => mp.Description)
-                .NotEmpty().WithMessage("Description is required.")
-                .MaximumLength(500).WithMessage("Description cannot be longer than 500 characters.");
+                .NotEmpty().WithMessage("Description is required.");
 
             RuleFor(mp => mp.Type)
                 .IsInEnum().WithMessage("Invalid meal plan type.");
