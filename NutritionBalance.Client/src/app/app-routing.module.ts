@@ -11,7 +11,8 @@ import { ProfileInfoComponent } from './components/profile-info/profile-info.com
 import { ProfileIngredientsComponent } from './components/profile-ingredients/profile-ingredients.component'
 import { ProfileDishesComponent } from './components/profile-dishes/profile-dishes.component'
 import { MealPlansComponent } from './components/meal-plans/meal-plans.component'
-import { MealPlan } from './models/mealPlan/entities/meal-plan.model';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { FoodStatisticsComponent } from './components/food-statistics/food-statistics.component'
 
   const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -19,10 +20,12 @@ import { MealPlan } from './models/mealPlan/entities/meal-plan.model';
     { path: '', component: HomeComponent, canActivate: [AuthGuard] },
     { path: 'profile-selection', component: ProfileSelectionComponent },
     { path: 'create-profile', component: CreateProfileComponent },
-    { path: 'profile', component: ProfileInfoComponent },
-    { path: 'food', component: ProfileIngredientsComponent },
-    { path: 'dishes', component: ProfileDishesComponent },
-    { path: 'meal-plans', component: MealPlansComponent },
+    { path: 'profile', component: ProfileInfoComponent, canActivate: [AuthGuard] },
+    { path: 'food', component: ProfileIngredientsComponent, canActivate: [AuthGuard] },
+    { path: 'dishes', component: ProfileDishesComponent, canActivate: [AuthGuard] },
+    { path: 'meal-plans', component: MealPlansComponent, canActivate: [AuthGuard] },
+    { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
+    { path: 'food-statistics', component: FoodStatisticsComponent, canActivate: [AuthGuard] },
     { path: '**', redirectTo: '' },
   ];
 

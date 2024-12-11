@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
+using UserProfileService.Application.DTOs;
 using UserProfileService.Application.Exceptions;
+using UserProfileService.Application.UseCases.DayResult;
 using UserProfileService.Domain.Entities;
 using UserProfileService.Domain.Interfaces;
 
@@ -10,11 +12,13 @@ namespace UserProfileService.Application.UseCases.Profile
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public UpdateProfileHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public UpdateProfileHandler(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
@@ -38,7 +42,37 @@ namespace UserProfileService.Application.UseCases.Profile
             }
 
             _mapper.Map(request.ProfileDto, profile);
+
+            if (request.ProfileDto.Weight!= null || request.ProfileDto.Height != null || request.ProfileDto.ActivityLevel != null)
+            {
+                var dayResult = await _mediator.Send(
+                    new GetOrCreateDayResultCommand(
+                        profile.Id,
+                        DateOnly.FromDateTime(DateTime.Now),
+                        profile.UserId));
+
+                dayResult.Weight = request.ProfileDto.Weight;
+                dayResult.Height = request.ProfileDto.Height;
+                dayResult.ActivityLevel = GetActivityMultiplier(request.ProfileDto.ActivityLevel);
+
+
+
+            }
+
             await _unitOfWork.SaveChangesAsync();
+        }
+
+        public double? GetActivityMultiplier(ActivityLevel? activityLevel)
+        {
+            return activityLevel switch
+            {
+                ActivityLevel.sedentary => 1.2,
+                ActivityLevel.low => 1.375,
+                ActivityLevel.medium => 1.55,
+                ActivityLevel.high => 1.725,
+                ActivityLevel.veryHigh => 1.9,
+                null => null
+            };
         }
     }
 }

@@ -22,7 +22,6 @@ export class ProfileService {
   public profiles$ = this.profilesSubject.asObservable();  // Публичный поток для подписчиков
 
   constructor(private http: HttpClient) {
-    this.loadCurrentProfile();
   }
 
   // Метод для получения всех профилей с сервера

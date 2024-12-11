@@ -1,15 +1,15 @@
 <div class="login-container">
-  <h2>Авторизация</h2>
+  <h2>Войти в аккаунт</h2>
 
   <form (ngSubmit)="onSubmit()">
-    <div>
-      <label for="username">Имя пользователя:</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required>
+    <div class="input-group">
+      <label for="username">Имя пользователя</label>
+      <input type="text" id="username" [(ngModel)]="username" name="username" required placeholder="Введите имя пользователя">
     </div>
 
-    <div>
-      <label for="password">Пароль:</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
+    <div class="input-group">
+      <label for="password">Пароль</label>
+      <input type="password" id="password" [(ngModel)]="password" name="password" required placeholder="Введите пароль">
     </div>
 
     <div *ngIf="errorMessage" class="error-message">
@@ -19,5 +19,5 @@
     <button type="submit">Войти</button>
   </form>
 
-  <p>Нет аккаунта? <a routerLink="/register">Зарегистрироваться</a></p>
+  <p class="register-link">Нет аккаунта? <a routerLink="/register">Зарегистрироваться</a></p>
 </div>

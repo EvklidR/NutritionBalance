@@ -1,4 +1,4 @@
-﻿using AuthorisationService.Application.Interfaces;
+﻿using AuthorisationService.Domain.Enums;
 using AuthorisationService.Domain.Interfaces;
 using MediatR;
 
@@ -15,6 +15,9 @@ namespace AuthorisationService.Application.UseCases
         public async Task Handle(MakeUserAdminCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByIdAsync(request.userId);
+            user.Role = Role.admin;
+
+            await _userRepository.CompleteAsync();
         }
     }
 }

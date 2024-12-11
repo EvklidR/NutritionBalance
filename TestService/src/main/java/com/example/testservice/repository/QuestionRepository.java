@@ -1,4 +1,7 @@
 package com.example.testservice.repository;
 
-public class QuestionRepository {
+import com.example.testservice.model.Question;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface QuestionRepository extends JpaRepository<Question, Long> {
 }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using AuthorisationService.Application.UseCases;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Authorization;
+using AuthorisationService.API.Filters;
 
 namespace AuthorisationService.Api.Controllers
 {
@@ -29,11 +32,15 @@ namespace AuthorisationService.Api.Controllers
             return Ok(response);
         }
 
-        [HttpGet("check_user_by_id/{id}")]
-        public async Task<IActionResult> Check(int id)
+        //[EnableCors("AllowJavaOrigin")]
+        //[Authorize]
+        //[ServiceFilter(typeof(UserIdFilter))]
+        [HttpPost("change-role")]
+        public async Task<IActionResult> ChangeRole()
         {
-            var response = await _mediator.Send(new CheckUserByIdQuery(id));
-            return Ok(response);
+           // int id = (int)HttpContext.Items["UserId"]!;
+            await _mediator.Send(new MakeUserAdminCommand(1));
+            return Ok();
         }
     }
 }

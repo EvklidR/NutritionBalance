@@ -22,6 +22,16 @@ namespace AuthorisationService.Api.DependencyInjection
                 });
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowJavaOrigin", builder =>
+                {
+                    builder.WithOrigins("http://localhost:8080")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
+                });
+            });
+
             services.AddControllers();
             services.AddEndpointsApiExplorer();
 

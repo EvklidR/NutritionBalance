@@ -19,17 +19,18 @@ export class SidebarComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private profileService: ProfileService,
-    private elRef: ElementRef, // Доступ к элементам DOM
-    private renderer: Renderer2 // Для добавления и удаления событий
+    private elRef: ElementRef,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit(): void {
     this.profiles$ = this.profileService.profiles$;
     this.currentUser$ = this.profileService.currentProfile$;
 
-    this.profileService.getUserProfiles().subscribe(() => {
-      this.profileService.loadCurrentProfile();
-    });
+      this.profileService.getUserProfiles().subscribe(() => {
+        this.profileService.loadCurrentProfile();
+      });
+
 
     // Слушаем клики по документу
     this.renderer.listen('document', 'click', (event) => {

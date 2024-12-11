@@ -75,8 +75,8 @@ export class HomeComponent implements OnInit {
   }
 
   getOrCreateDayResult(): void {
-    const today = new Date().toISOString().split('T')[0];
-    //const today = new Date().toLocaleDateString('en-CA');
+    //const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toLocaleDateString('en-CA');
 
     this.dayResultSubscription = this.dayResultService.getOrCreateDayResult(this.currentUserId, today).subscribe({
       next: (result) => {

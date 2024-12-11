@@ -18,6 +18,17 @@ namespace UserProfileService.API.Controllers
             _mediator = mediator;
         }
 
+        [HttpGet("user-report")]
+        public async Task<IActionResult> GetUserReport([FromQuery] int profileId, [FromQuery] DateOnly startDate, [FromQuery] DateOnly endDate)
+        {
+            var query = new GenerateUserReportQuery(profileId, startDate, endDate);
+
+            var pdfStream = await _mediator.Send(query);
+
+            var fileName = $"User_Report_{profileId}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+            return File(pdfStream.ToArray(), "application/pdf", fileName);
+        }
+
         [Authorize]
         [HttpGet("{id}")]
         [ServiceFilter(typeof(UserIdFilter))]
