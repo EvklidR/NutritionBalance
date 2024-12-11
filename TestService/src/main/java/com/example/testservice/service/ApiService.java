@@ -27,7 +27,7 @@ public class ApiService {
             headers.set("Authorization", "Bearer " + token);
             HttpEntity<String> entity = new HttpEntity<>(headers);
 
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:7078/authorisation-service/Auth/change-role/", entity, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:7078/authorisation-service/Auth/change-role", entity, String.class);
         }
     }
 }

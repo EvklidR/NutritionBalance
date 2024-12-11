@@ -12,6 +12,7 @@ namespace AuthorisationService.Api.DependencyInjection
             services.AddGrpc();
 
             var allowedOrigins = configuration.GetSection("AllowedOrigins:CorsOrigins").Get<string[]>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigin", builder =>
@@ -26,7 +27,7 @@ namespace AuthorisationService.Api.DependencyInjection
             {
                 options.AddPolicy("AllowJavaOrigin", builder =>
                 {
-                    builder.WithOrigins("http://localhost:8080")
+                    builder.WithOrigins(["http://localhost:8080"])
                            .AllowAnyMethod()
                            .AllowAnyHeader();
                 });

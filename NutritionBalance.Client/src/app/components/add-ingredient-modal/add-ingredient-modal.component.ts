@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { IngredientService } from '../../services/profile/ingredient.service';
 import { CreateIngredientDTO } from '../../models/profile/DTOs/ingredient/create-ingredient.dto';
-import { Ingredient } from '../../models/profile/entities/ingredient.model'
+import { Ingredient } from '../../models/profile/entities/ingredient.model';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-ingredient-modal',
@@ -20,7 +22,49 @@ export class AddIngredientModalComponent {
 
   isSaving: boolean = false;
 
-  constructor(private ingredientService: IngredientService) { }
+  ingredientSearchTerm: string = ''; // Поле для поиска ингредиентов
+  ingredientsFromApi: Ingredient[] = [];
+  searchDebounce: Subject<string> = new Subject<string>();
+
+  constructor(private ingredientService: IngredientService) {
+    // Настройка debounce для поиска
+    this.searchDebounce.pipe(debounceTime(1000)).subscribe((searchTerm) => {
+      this.getIngredientsFromApi(searchTerm);
+    });
+  }
+
+  onSearchChange(): void {
+    this.searchDebounce.next(this.ingredientSearchTerm);
+  }
+
+  getIngredientsFromApi(searchTerm: string): void {
+    if (!searchTerm.trim()) {
+      this.ingredientsFromApi = [];
+      return;
+    }
+    this.ingredientService.getIngredientsFromApi(searchTerm).subscribe(
+      (data) => {
+        console.log(data)
+        this.ingredientsFromApi = data;
+      },
+      (error) => {
+        console.error('Ошибка получения ингредиентов:', error);
+        this.ingredientsFromApi = [];
+      }
+    );
+  }
+
+  selectIngredient(ingredient: Ingredient): void {
+    // Устанавливаем данные выбранного ингредиента
+    this.name = ingredient.name;
+    this.proteins = ingredient.proteins;
+    this.fats = ingredient.fats;
+    this.carbohydrates = ingredient.carbohydrates;
+
+    // Сбрасываем поиск
+    this.ingredientSearchTerm = '';
+    this.ingredientsFromApi = [];
+  }
 
   saveIngredient(): void {
     if (!this.name || this.proteins === null || this.fats === null || this.carbohydrates === null) {
@@ -50,7 +94,6 @@ export class AddIngredientModalComponent {
       }
     );
   }
-
 
   closeOnBackdropClick(event: MouseEvent): void {
     this.closeModal.emit();

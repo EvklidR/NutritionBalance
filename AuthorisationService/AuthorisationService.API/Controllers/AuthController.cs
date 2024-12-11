@@ -32,7 +32,7 @@ namespace AuthorisationService.Api.Controllers
             return Ok(response);
         }
 
-        //[EnableCors("AllowJavaOrigin")]
+        [EnableCors("AllowJavaOrigin")]
         //[Authorize]
         //[ServiceFilter(typeof(UserIdFilter))]
         [HttpPost("change-role")]

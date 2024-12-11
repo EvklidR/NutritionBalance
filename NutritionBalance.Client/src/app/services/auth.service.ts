@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CreateUserDto } from '../models/auth/DTOs/create-user.dto';
 import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
 
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -98,4 +99,20 @@ export class AuthService {
     localStorage.removeItem('currentProfileId');
     this.router.navigate(['/login']);
   }
+
+  //isAdmin(): boolean {
+  //  const token = this.getAccessToken();
+  //  if (!token) {
+  //    return false;
+  //  }
+
+  //  try {
+  //    const decodedToken: any = jwt_decode(token);
+  //    return decodedToken.role === 'admin';
+  //  } catch (error) {
+  //    console.error('Error decoding token', error);
+  //    return false;
+  //  }
+  //}
+
 }

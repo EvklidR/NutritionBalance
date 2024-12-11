@@ -56,6 +56,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+
+
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
@@ -66,7 +69,6 @@ export class HomeComponent implements OnInit {
       if (profile) {
         this.currentUserId = profile.id;
         this.profileService.calculateDailyNeeds(profile.id).subscribe((dailyNeeads) => {
-          console.log(dailyNeeads)
           this.dailyNeeads = dailyNeeads;
           this.getOrCreateDayResult();
         });
@@ -269,7 +271,7 @@ export class HomeComponent implements OnInit {
         (meal) => {
           console.log("meal was created", meal)
           this.dayResult?.meals.push(meal)
-          this.updateTotalNutrients()
+          this.getOrCreateDayResult()
           this.closeModal()
         },
         (error) => {
