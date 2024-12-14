@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/questions")
+@RequestMapping("/questions")
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
@@ -18,19 +18,5 @@ public class QuestionController {
     @GetMapping
     public List<Question> getAllQuestions() {
         return questionService.findAll();
-    }
-
-    @PostMapping
-    public Question createQuestion(@RequestBody Question question) {
-        for (Answer answer : question.getAnswers()) {
-            answer.setQuestion(question); // Устанавливаем связь
-        }
-        return questionService.save(question);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable Long id) {
-        questionService.deleteById(id);
-        return ResponseEntity.noContent().build();
     }
 }

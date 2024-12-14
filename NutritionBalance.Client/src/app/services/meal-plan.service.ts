@@ -22,9 +22,9 @@ export class MealPlanService {
     });
   }
 
-  getMealPlansByOwner(): Observable<any> {
+  getMealPlansByOwner(): Observable<MealPlan[]> {
     const url = `${this.baseUrl}/by-owner`;
-    return this.http.get(url);
+    return this.http.get<MealPlan[]>(url);
   }
 
   getMealPlansById(id: number): Observable<MealPlan> {
@@ -32,9 +32,10 @@ export class MealPlanService {
     return this.http.get<MealPlan>(url);
   }
 
-  createMealPlan(mealPlanData: MealPlanCreateDTO): Observable<any> {
+  createMealPlan(mealPlanData: MealPlanCreateDTO): Observable<MealPlan> {
+    const payload = { MealPlanDto: mealPlanData };
     const url = `${this.baseUrl}/create`;
-    return this.http.post(url, mealPlanData);
+    return this.http.post<MealPlan>(url, payload);
   }
 
   updateMealPlan(updateData: UpdateMealPlanDTO): Observable<any> {

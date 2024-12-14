@@ -37,7 +37,7 @@ namespace UserProfileService.Application.Mappings
                 ActivityLevel.medium => 1.55,
                 ActivityLevel.high => 1.725,
                 ActivityLevel.veryHigh => 1.9,
-                _ => 1.2, // Default multiplier in case the value is not valid
+                _ => 1.2,
             };
         }
     }

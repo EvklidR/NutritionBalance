@@ -1,4 +1,4 @@
-package com.example.testservice.service;
+package com.example.testservice.service.model;
 
 import javax.net.ssl.*;
 import java.net.http.HttpClient;

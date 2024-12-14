@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "authorisationservice.api": "StartDebugging",
+        "userprofileservice.api": "StartDebugging",
+        "mealplanservice.api": "StartDebugging",
+        "nutritionbalance.apigateway": "StartDebugging"
+      }
+    }
+  }
+}

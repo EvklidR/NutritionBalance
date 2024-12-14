@@ -1,33 +1,36 @@
 package com.example.testservice.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.testservice.service.model.InsecureHttpClient;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class ApiService {
 
-    private final RestTemplate restTemplate;
-
-    @Autowired
-    public ApiService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
-    public void changeRoleIfEvaluationExceeds(double evaluationResult, String token) {
+    public void changeRoleIfEvaluationExceeds(double evaluationResult, String token) throws NoSuchAlgorithmException, KeyManagementException, IOException, InterruptedException {
         if (evaluationResult > 0.9) {
 
-            String url = "";
+            String url = "https://localhost:7184/Auth/change-role";
 
-            // Выполнение запроса к внешнему сервису
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Bearer " + token);
-            HttpEntity<String> entity = new HttpEntity<>(headers);
+            HttpClient client = InsecureHttpClient.create();
 
-            ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:7078/authorisation-service/Auth/change-role", entity, String.class);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + token)
+                    .POST(HttpRequest.BodyPublishers.noBody())
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            System.out.println("Response Code: " + response.statusCode());
+            System.out.println("Response Body: " + response.body());
         }
     }
 }

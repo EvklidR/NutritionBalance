@@ -8,30 +8,37 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  email: string = '';
   login: string = '';
   password: string = '';
-  email: string = '';
   confirmPassword: string = '';
   errorMessage: string = '';
-  successMessage: string = '';
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
-  onSubmit(): void {
-    if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Пароли не совпадают!';
+  onSubmit(form: any): void {
+    if (!form.valid) {
       return;
     }
 
-    this.authService.register({ email: this.email, login: this.login, password: this.password }).subscribe({
+    const { email, login, password, confirmPassword } = form.value;
+
+    if (password !== confirmPassword) {
+      this.errorMessage = 'Пароли не совпадают.';
+      return;
+    }
+
+    this.authService.register({ email, login, password }).subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        this.errorMessage = '';
+        setTimeout(() => this.router.navigate(['/']), 3000);
       },
       error: (error) => {
-        this.errorMessage = 'Ошибка при регистрации, попробуйте снова!';
-        this.successMessage = '';
+        this.errorMessage = error.error?.message || 'Ошибка при регистрации, попробуйте снова!';
       }
     });
   }
-
 }

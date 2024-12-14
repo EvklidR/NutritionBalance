@@ -13,6 +13,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["AuthorisationService/AuthorisationService.API/AuthorisationService.API.csproj", "AuthorisationService/AuthorisationService.API/"]
+COPY ["NutritionBalance.ServiceDefaults/NutritionBalance.ServiceDefaults.csproj", "NutritionBalance.ServiceDefaults/"]
+COPY ["AuthorisationService/AuthorisationService.Application/AuthorisationService.Application.csproj", "AuthorisationService/AuthorisationService.Application/"]
+COPY ["AuthorisationService/AuthorisationService.Domain/AuthorisationService.Domain.csproj", "AuthorisationService/AuthorisationService.Domain/"]
+COPY ["AuthorisationService/AuthorisationService.Infrastructure/AuthorisationService.Infrastructure.csproj", "AuthorisationService/AuthorisationService.Infrastructure/"]
 RUN dotnet restore "./AuthorisationService/AuthorisationService.API/AuthorisationService.API.csproj"
 COPY . .
 WORKDIR "/src/AuthorisationService/AuthorisationService.API"

@@ -117,7 +117,6 @@ export class StatisticsComponent implements OnInit {
       this.imtData[i].imt = this.weightData[i].weight / (this.profile!.height * this.profile!.height / 10000);
     }
 
-    // Рассчитываем среднее значение и разницу
     const knownWeights = this.weightData.filter(item => item.weight > -1);
     if (knownWeights.length > 0) {
       this.averageWeight = knownWeights.reduce((sum, item) => sum + item.weight, 0) / knownWeights.length;
@@ -126,12 +125,10 @@ export class StatisticsComponent implements OnInit {
       this.weightDifference = lastWeight - firstWeight;
     }
 
-    // Динамически рассчитываем максимальное значение для оси Y
-    const maxWeight = Math.max(...this.weightData.map(item => item.weight));
+   const maxWeight = Math.max(...this.weightData.map(item => item.weight));
     const maxImt = Math.max(...this.imtData.map(item => item.imt));
-    this.yScaleMax = Math.max(maxWeight, maxImt) + 10; // Мы берем наибольшее значение для максимума
+    this.yScaleMax = Math.max(maxWeight, maxImt) + 10; 
 
-    // Создаем данные для графика
     this.chartData = [
       {
         name: 'Вес (кг)',
@@ -149,8 +146,8 @@ export class StatisticsComponent implements OnInit {
       }
     ];
 
-    console.log(this.weightData); // Проверка данных
-    console.log(this.chartData);  // Проверка данных для графика
+    console.log(this.weightData);
+    console.log(this.chartData);
   }
 
   navigateToFoodStatistics(): void {

@@ -1,5 +1,4 @@
 .ingredient-list {
-  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -16,7 +15,7 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #4CAF50; /* Зеленый цвет */
+  background-color: #4CAF50;
   color: white;
   font-size: 16px;
   transition: background-color 0.3s;
@@ -37,13 +36,13 @@
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #d3d347; /* Цвет кнопки */
+  background-color: #d3d347;
   font-size: 16px;
   cursor: pointer;
 }
 
   .add-button:hover {
-    background-color: #c1c12f; /* Немного темнее при наведении */
+    background-color: #c1c12f;
   }
 
 .loading {
@@ -64,7 +63,7 @@
 }
 
 .ingredient-card {
-  flex: 1 1 calc(200px - 20px); /* Минимальная ширина 200px */
+  flex: 1 1 calc(200px - 20px);
   min-width: 200px;
   padding: 15px;
   border: 1px solid #ccc;
@@ -95,16 +94,16 @@
   border: none;
   font-size: 18px;
   cursor: pointer;
-  color: #ff4d4d; /* Красный цвет для иконки корзины */
+  color: #ff4d4d;
   transition: color 0.3s;
 }
 
   .delete-button:hover {
-    color: #d12f2f; /* Темнее при наведении */
+    color: #d12f2f;
   }
 
 .ingredient-card {
-  position: relative; /* Установка для размещения элементов внутри карточки */
+  position: relative; 
 }
 
 .dishes-btn {
@@ -132,6 +131,6 @@
 }
 
   .filter-input:focus {
-    border-color: #4CAF50; /* Зеленый цвет при фокусе */
+    border-color: #4CAF50; 
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
   }

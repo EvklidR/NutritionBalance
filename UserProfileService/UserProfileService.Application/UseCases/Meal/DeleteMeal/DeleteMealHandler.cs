@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using UserProfileService.Application.Exceptions;
-using UserProfileService.Domain.Entities;
 using UserProfileService.Domain.Interfaces;
 
 namespace UserProfileService.Application.UseCases.Meal

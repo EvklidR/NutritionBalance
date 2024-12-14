@@ -2,7 +2,6 @@
 using UserProfileService.Application.Exceptions;
 using UserProfileService.Application.Interfaces;
 using UserProfileService.Application.Models;
-using UserProfileService.Domain.Entities;
 using UserProfileService.Domain.Enums;
 using UserProfileService.Domain.Interfaces;
 

@@ -17,10 +17,10 @@ namespace UserProfileService.Infrastructure.DependencyInjection
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IUserService>(sp =>
-                new UserAuthClient("https://localhost:7184"));
+                new UserAuthClient(configuration["GrpcServices:UserAuthUrl"]));
 
             services.AddSingleton<IMealPlanService>(sp =>
-                new MealPlanServiceClient("https://localhost:7262"));
+                new MealPlanServiceClient(configuration["GrpcServices:MealPlanUrl"]));
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
@@ -38,9 +38,12 @@ namespace UserProfileService.Infrastructure.DependencyInjection
             {
                 Directory.CreateDirectory(imagePath);
             }
+
             services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect("127.0.0.1:6379"));
 
-            services.AddScoped<IImageService>(provider => new ImageService(imagePath, provider.GetRequiredService<IConnectionMultiplexer>()));
+
+            services.AddScoped<IImageService>(provider =>
+                new ImageService(imagePath, provider.GetRequiredService<IConnectionMultiplexer>()));
 
             return services;
         }

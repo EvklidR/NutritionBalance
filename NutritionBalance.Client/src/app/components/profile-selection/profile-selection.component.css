@@ -3,8 +3,8 @@
   background-color: white;
   margin: 30px;
   padding: 20px;
-  border-radius: 8px; /* Закругленные углы */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .profile-list {
@@ -27,15 +27,15 @@
 .create-profile-btn {
   margin-top: 20px;
   padding: 10px 20px;
-  background-color: #2ecc71; /* Зеленый фон */
+  background-color: #2ecc71;
   color: white;
   border: none;
-  border-radius: 5px; /* Закругленные углы кнопки */
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s; /* Плавный переход цвета фона */
+  transition: background-color 0.3s;
 }
 
   .create-profile-btn:hover {
-    background-color: #27ae60; /* Темно-зеленый фон при наведении */
+    background-color: #27ae60; 
   }

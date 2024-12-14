@@ -1,10 +1,9 @@
 <div class="modal-backdrop" (click)="closeOnBackdropClick($event)">
   <div class="modal-content" (click)="preventClose($event)">
-    <h2>Добавить новый ингредиент</h2>
+    <h2>Добавить новый продукт</h2>
 
-    <!-- Поиск ингредиента -->
     <div class="ingredient-search">
-      <label for="ingredient-search">Найти ингредиент:</label>
+      <label for="ingredient-search">Найти продукт:</label>
       <div class="search-wrapper">
         <input id="ingredient-search"
                [(ngModel)]="ingredientSearchTerm"
@@ -21,10 +20,9 @@
 
     <hr class="separator" />
 
-    <!-- Поля для добавления нового ингредиента -->
     <div class="form-group">
       <label for="name">Название:</label>
-      <input id="name" [(ngModel)]="name" type="text" placeholder="Название нового ингредиента" />
+      <input id="name" [(ngModel)]="name" type="text" placeholder="Название нового продукта" />
     </div>
     <div class="form-group">
       <label for="proteins">Белки:</label>

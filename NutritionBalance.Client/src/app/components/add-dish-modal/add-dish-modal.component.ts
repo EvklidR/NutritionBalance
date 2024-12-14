@@ -2,8 +2,8 @@ import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { DishService } from '../../services/profile/dish.service';
 import { CreateDishDTO } from '../../models/profile/DTOs/dish/create-dish.dto';
 import { IngredientOfDishDTO } from '../../models/profile/DTOs/dish/ingredient-of-dish.dto';
-import { Ingredient } from '../../models/profile/entities/ingredient.model'; // Модель ингредиента
-import { IngredientService } from '../../services/profile/ingredient.service'; // Сервис ингредиентов
+import { Ingredient } from '../../models/profile/entities/ingredient.model';
+import { IngredientService } from '../../services/profile/ingredient.service';
 import { Dish } from '../../models/profile/entities/dish.model'
 
 @Component({
@@ -22,6 +22,9 @@ export class AddDishModalComponent {
   carbohydrates: number | null = null;
   description?: string;
   amountOfPortions!: number;
+  imageUrl?: string;
+  selectedImage: File | null = null;
+
 
   allIngredients: Ingredient[] = [];
   selectedIngredients: IngredientOfDishDTO[] = [];
@@ -71,6 +74,14 @@ export class AddDishModalComponent {
     return ingredient ? ingredient.name : 'Неизвестный ингредиент';
   }
 
+  onImageChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedImage = file;
+      this.imageUrl = URL.createObjectURL(file);
+    }
+  }
+
   saveDish(): void {
     if (!this.name || !this.amountOfPortions) {
       alert('Пожалуйста, заполните все обязательные поля.');
@@ -89,10 +100,23 @@ export class AddDishModalComponent {
 
     this.dishService.createDish(newDish).subscribe(
       (dish) => {
-        this.isSaving = false;
-        console.log(dish)
-        this.dishAdded.emit(dish);
-        this.closeModal.emit();
+        if (this.selectedImage) {
+          this.dishService.updateImage(dish.id, this.selectedImage).subscribe(
+            () => {
+              this.isSaving = false;
+              this.dishAdded.emit(dish);
+              this.closeModal.emit();
+            },
+            (error) => {
+              console.error('Ошибка при обновлении изображения:', error);
+              this.isSaving = false;
+            }
+          );
+        } else {
+          this.isSaving = false;
+          this.dishAdded.emit(dish);
+          this.closeModal.emit();
+        }
       },
       (error) => {
         console.error('Ошибка при сохранении блюда:', error);

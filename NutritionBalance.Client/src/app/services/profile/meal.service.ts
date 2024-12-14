@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Meal } from '../../models/profile/entities/meal.model';
 import { CreateMealDTO } from '../../models/profile/DTOs/dayResult/create-meal.dto';
 import { UpdateMealDTO } from '../../models/profile/DTOs/dayResult/update-meal.dto';
-import { EatenFood } from '../../models/profile/entities/eaten-food.model'; // Импорт модели еды
+import { EatenFood } from '../../models/profile/entities/eaten-food.model';
 
 @Injectable({
   providedIn: 'root',

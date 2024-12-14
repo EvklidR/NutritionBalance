@@ -5,8 +5,6 @@
         public int ProfileId { get; set; }
         public DateOnly Date { get; set; }
         public double? Weight { get; set; }
-        public double? Height { get; set; }
-        public ActivityLevel? ActivityLevel { get; set; }
         public int GlassesOfWater { get; set; } = 0;
     }
 }

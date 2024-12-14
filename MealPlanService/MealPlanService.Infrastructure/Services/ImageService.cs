@@ -66,11 +66,13 @@ namespace MealPlanService.Infrastructure.Services
 
         public async Task<byte[]> GetCashedImageAsync(string fileName)
         {
+
             byte[] cachedFile = await _redisDb.StringGetAsync(fileName);
             if (cachedFile != null && cachedFile.Length > 0)
             {
                 return cachedFile;
             }
+
 
             byte[] fileBytes = await GetImageAsync(fileName);
 

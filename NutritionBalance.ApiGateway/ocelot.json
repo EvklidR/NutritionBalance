@@ -32,6 +32,17 @@
         }
       ],
       "UpstreamPathTemplate": "/user-profile-service/{everything}"
+    },
+    {
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/test-service/{everything}"
     }
   ]
 }

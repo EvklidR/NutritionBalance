@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./meal-plans.component.css'],
 })
 export class MealPlansComponent implements OnInit {
+  userRole: string | null = null;
+
   profile: Profile | null = null;
   profileId: number = 0;
   private profileSubscription!: Subscription;
@@ -44,8 +46,15 @@ export class MealPlansComponent implements OnInit {
       return;
     }
 
+    if (this.authService.isAdmin()) {
+      this.userRole = 'admin'
+    }
+
+
     this.profileSubscription = this.profileService.currentProfile$.subscribe((profile) => {
       this.profile = profile;
+
+      console.log(this.profile, this.userRole)
 
       if (profile) {
         this.profileId = profile.id;
@@ -91,7 +100,6 @@ export class MealPlansComponent implements OnInit {
       );
   }
 
-  // Метод для загрузки изображения
   loadImage(planId: number, imageUrl: string): void {
     this.mealPlanService.getFile(imageUrl).subscribe(
       (blob) => {
@@ -160,4 +168,11 @@ export class MealPlansComponent implements OnInit {
     )
   }
 
+  navigateToTest(): void {
+    this.router.navigate(['/test']);
+  }
+
+  navigateToMyPlans(): void {
+    this.router.navigate(['/my-meal-plans']);
+  }
 }

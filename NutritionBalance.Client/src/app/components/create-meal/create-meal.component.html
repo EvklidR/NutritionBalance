@@ -1,0 +1,67 @@
+<div class="modal-backdrop" (click)="close()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+
+    <label class="meal-name">Название приема пищи <input [(ngModel)]="mealToCreate.name"></label>
+
+    <div class="products-wrapper">
+
+      <div class="modal-section">
+        <h3 class="section-header">Продукты</h3>
+        <div class="item-list">
+          <div class="list-header">
+            <span class="header-name">Наименование</span>
+            <span class="header-quantity">Граммы</span>
+          </div>
+          <div *ngIf="selectedIngredients.length === 0" class="no-items">
+            Нет выбранных продуктов
+          </div>
+          <div *ngFor="let item of selectedIngredients" class="item">
+            <span>{{ item.ingredient.name }}</span>
+            <input type="number" [(ngModel)]="item.weight" placeholder="граммы" />
+            <button class="delete-btn" (click)="removeIngredient(item.ingredient)">&#10006;</button>
+          </div>
+        </div>
+        <button class="add-btn" (click)="showIngredientDropdown()">+</button>
+        <div *ngIf="isDropdownVisible" class="dropdown">
+          <ul>
+            <li *ngFor="let ingredient of ingredients" (click)="addIngredient(ingredient)">
+              {{ ingredient.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3 class="section-header">Блюда</h3>
+        <div class="item-list">
+          <div class="list-header">
+            <span class="header-name">Наименование</span>
+            <span class="header-quantity">Порции</span>
+          </div>
+          <div *ngIf="selectedDishes.length === 0" class="no-items">
+            Нет выбранных блюд
+          </div>
+          <div *ngFor="let item of selectedDishes" class="item">
+            <span>{{ item.dish.name }}</span>
+            <input type="number" [(ngModel)]="item.servings" placeholder="порции" />
+            <button class="delete-btn" (click)="removeDish(item.dish)">&#10006;</button>
+          </div>
+        </div>
+        <button class="add-btn" (click)="showDishDropdown()">+</button>
+        <div *ngIf="isDishDropdownVisible" class="dropdown">
+          <ul>
+            <li *ngFor="let dish of dishes" (click)="addDish(dish)">
+              {{ dish.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+
+
+    </div>
+    <div class="modal-footer">
+      <button class="add-meal-btn" (click)="addMeal()">Добавить прием пищи</button>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["UserProfileService/UserProfileService.API/UserProfileService.API.csproj", "UserProfileService/UserProfileService.API/"]
+COPY ["NutritionBalance.ServiceDefaults/NutritionBalance.ServiceDefaults.csproj", "NutritionBalance.ServiceDefaults/"]
+COPY ["UserProfileService/UserProfileService.Application/UserProfileService.Application.csproj", "UserProfileService/UserProfileService.Application/"]
+COPY ["UserProfileService/UserProfileService.Domain/UserProfileService.Domain.csproj", "UserProfileService/UserProfileService.Domain/"]
+COPY ["UserProfileService/UserProfileService.Infrastructure/UserProfileService.Infrastructure.csproj", "UserProfileService/UserProfileService.Infrastructure/"]
 RUN dotnet restore "./UserProfileService/UserProfileService.API/UserProfileService.API.csproj"
 COPY . .
 WORKDIR "/src/UserProfileService/UserProfileService.API"

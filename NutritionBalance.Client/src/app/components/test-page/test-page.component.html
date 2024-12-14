@@ -1,0 +1,29 @@
+<div class="questions-wrapper">
+  <h2>Тестовые вопросы</h2>
+  <form>
+    <div *ngFor="let question of questions" class="question-block">
+      <h3>{{ question.questionText }}</h3>
+      <div *ngFor="let answer of question.answers">
+        <label>
+          <input type="checkbox"
+                 (change)="toggleAnswer(answer.id)" />
+          {{ answer.text }}
+        </label>
+      </div>
+    </div>
+    <button type="button" (click)="submitAnswers()">Submit</button>
+  </form>
+ </div>
+
+<div *ngIf="openModal" class="modal-background" (click)="closeModal()">
+  <div class="modal-block" (click)="$event.stopPropagation()">
+    <p *ngIf="evaluationResult >= 0.9" style="color: green">
+      Поздравляем! Вы успешношно прошли тест, ващ результат: {{evaluationResult*100}}%.
+      Перезайдите в аккаунт, чтобы получить возможность создавать собственные планы питания
+    </p>
+    <p *ngIf="evaluationResult < 0.9" style="color: red">
+      Ваш результат: {{evaluationResult*100}}%.
+      К сожалению, этого недостаточно, чтобы получить возможность создавать собственные планы питания
+    </p>
+  </div>
+</div>

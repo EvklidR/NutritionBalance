@@ -8,16 +8,12 @@ import { MealService } from '../../services/profile/meal.service';
 import { DayResult } from '../../models/profile/entities/day-result.model';
 import { Profile } from '../../models/profile/entities/profile.model';
 import { DailyNeedsResponse } from '../../models/profile/DTOs/profile/daily-needs-response.dto'
-import { CreateMealDTO } from '../../models/profile/DTOs/dayResult/create-meal.dto'
 import { UpdateDayResultDTO } from '../../models/profile/DTOs/dayResult/update-day-result.dto'
 import { UpdateProfileDTO } from '../../models/profile/DTOs/profile/update-profile.dto'
-import { Ingredient } from '../../models/profile/entities/ingredient.model'
-import { Dish } from '../../models/profile/entities/dish.model'
-import { IngredientService } from '../../services/profile/ingredient.service'
-import { DishService } from '../../services/profile/dish.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { MatDialog } from '@angular/material/dialog';
+import { Meal } from '../../models/profile/entities/meal.model'
 import { MealDetailsModalComponent } from '../meal-details-modal/meal-details-modal.component';
 
 
@@ -32,6 +28,9 @@ export class HomeComponent implements OnInit {
   currentUserId!: number;
   dayResult!: DayResult | null;
   profile!: Profile | null;
+  profileId: number = 0;
+  dayResultId: number = 0;
+
   dailyNeeads: DailyNeedsResponse = new DailyNeedsResponse();
   totalNutrients = {
     calories: 0,
@@ -49,16 +48,11 @@ export class HomeComponent implements OnInit {
     private dayResultService: DayResultService,
     private profileService: ProfileService,
     private mealService: MealService,
-    private ingredientService: IngredientService,
-    private dishService: DishService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-
-
-
     if (!this.authService.isAuthenticated()) {
       this.router.navigate(['/login']);
       return;
@@ -67,6 +61,7 @@ export class HomeComponent implements OnInit {
     this.profileSubscription = this.profileService.currentProfile$.subscribe((profile) => {
       this.profile = profile;
       if (profile) {
+        this.profileId = profile.id;
         this.currentUserId = profile.id;
         this.profileService.calculateDailyNeeds(profile.id).subscribe((dailyNeeads) => {
           this.dailyNeeads = dailyNeeads;
@@ -76,14 +71,17 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  onMealAdded(meal: Meal): void {
+    this.getOrCreateDayResult()
+  }
+
   getOrCreateDayResult(): void {
-    //const today = new Date().toISOString().split('T')[0];
     const today = new Date().toLocaleDateString('en-CA');
 
     this.dayResultSubscription = this.dayResultService.getOrCreateDayResult(this.currentUserId, today).subscribe({
       next: (result) => {
         this.dayResult = result;
-
+        this.dayResultId = result.id;
         let totalCalories = 0;
         let totalProteins = 0;
         let totalFats = 0;
@@ -119,7 +117,6 @@ export class HomeComponent implements OnInit {
     return { calories: 0, proteins: 0, fats: 0, carbs: 0 };
   }
 
-
   getAge(birthday: string): number {
     const birthDate = new Date(birthday);
     const today = new Date();
@@ -148,46 +145,6 @@ export class HomeComponent implements OnInit {
     return total !== 0 ? (current / total) * 100 : 0;
   }
 
-  isModalOpen = false;
-  isDropdownVisible = false;
-  isDishDropdownVisible = false;
-
-  selectedIngredients: { ingredient: Ingredient, weight: number }[] = [];
-  selectedDishes: { dish: Dish, servings: number }[] = [];
-
-  ingredients: Ingredient[] = [];
-  dishes: Dish[] = [];
-
-  mealToCreate: CreateMealDTO = new CreateMealDTO();
-
-
-  loadIngredients() {
-    if (this.profile) {
-      this.ingredientService.getIngredients(this.profile.id).subscribe(
-        (ingredients) => {
-          this.ingredients = ingredients;
-        },
-        (error) => {
-          console.error('Ошибка при загрузке ингредиентов', error);
-        }
-      );
-    }
-  }
-
-  loadDishes() {
-    if (this.profile) {
-      this.dishService.getAllDishes(this.profile.id).subscribe(
-        (dishes) => {
-          this.dishes = dishes;
-        },
-        (error) => {
-          console.error('Ошибка при загрузке блюд', error);
-        }
-      );
-    }
-
-  }
-
   openMealDetails(meal: any): void {
     const dialogRef = this.dialog.open(MealDetailsModalComponent, {
       width: 'auto',
@@ -200,86 +157,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  openModal() {
-    this.isModalOpen = true;
-    this.loadIngredients();
-    this.loadDishes();
-    this.selectedDishes = []
-    this.selectedIngredients = []
-    this.mealToCreate = new CreateMealDTO();
-  }
+  showAddMealModal: boolean = false;
 
-  closeModal() {
-    this.isModalOpen = false;
-    this.isDropdownVisible = false;
-    this.isDishDropdownVisible = false;
-  }
-
-  showIngredientDropdown() {
-    this.isDropdownVisible = true;
-  }
-
-  addIngredient(ingredient: Ingredient) {
-    this.selectedIngredients.push({ ingredient, weight: 100 });
-    this.isDropdownVisible = false;
-  }
-
-  removeIngredient(ingredient: Ingredient) {
-    this.selectedIngredients = this.selectedIngredients.filter(item => item.ingredient !== ingredient);
-  }
-
-  showDishDropdown() {
-    this.isDishDropdownVisible = true;
-  }
-
-  addDish(dish: Dish) {
-    this.selectedDishes.push({ dish, servings: 1 });
-    this.isDishDropdownVisible = false;
-  }
-
-  removeDish(dish: Dish) {
-    this.selectedDishes = this.selectedDishes.filter(item => item.dish !== dish);
-  }
-
-  addMeal() {
-    if (this.dayResult) {
-      if (this.selectedIngredients.length === 0 && this.selectedDishes.length === 0) {
-        this.closeModal();
-        return;
-      }
-
-      if (!this.mealToCreate.name || this.mealToCreate.name.trim() === '') {
-        this.snackBar.open('Meal name cannot be empty!', 'Close', {
-          duration: 3000,
-          verticalPosition: 'bottom',
-          horizontalPosition: 'center',
-          panelClass: ['snackbar-error']
-        });
-        return;
-      }
-
-      for (const prod of this.selectedDishes) {
-        this.mealToCreate.foods.push({ foodId: prod.dish.id, weight: prod.servings * prod.dish.weightOfPortion })
-      }
-      for (const prod of this.selectedIngredients) {
-        this.mealToCreate.foods.push({ foodId: prod.ingredient.id, weight: prod.weight })
-      }
-
-      this.mealToCreate.dayResultId = this.dayResult.id;
-      
-      this.mealService.addMeal(this.mealToCreate).subscribe(
-        (meal) => {
-          console.log("meal was created", meal)
-          this.dayResult?.meals.push(meal)
-          this.getOrCreateDayResult()
-          this.closeModal()
-        },
-        (error) => {
-          console.error("Error while creating meal:", error)
-        }
-      )
-    }
-  }
+ 
 
   updateTotalNutrients(): void {
     if (!this.dayResult?.meals) return;
@@ -316,11 +196,7 @@ export class HomeComponent implements OnInit {
           if (this.dayResult) {
             this.dayResult.meals = this.dayResult.meals.filter(meal => meal.id !== mealId);
 
-            // Обновление значений КБЖУ
             this.updateTotalNutrients();
-
-            // Если Angular не видит изменений, можно обновить ссылку:
-            this.dayResult = { ...this.dayResult };
             console.log("Deleted successfully");
           }
         },

@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using AuthorisationService.API.Filters;
 
 namespace AuthorisationService.Api.DependencyInjection
 {
@@ -35,6 +36,8 @@ namespace AuthorisationService.Api.DependencyInjection
 
             services.AddControllers();
             services.AddEndpointsApiExplorer();
+
+            services.AddScoped<UserIdFilter>();
 
             services.AddSwaggerGen(c =>
             {

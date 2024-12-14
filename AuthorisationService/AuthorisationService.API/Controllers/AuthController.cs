@@ -33,13 +33,13 @@ namespace AuthorisationService.Api.Controllers
         }
 
         [EnableCors("AllowJavaOrigin")]
-        //[Authorize]
-        //[ServiceFilter(typeof(UserIdFilter))]
+        [Authorize]
+        [ServiceFilter(typeof(UserIdFilter))]
         [HttpPost("change-role")]
         public async Task<IActionResult> ChangeRole()
         {
-           // int id = (int)HttpContext.Items["UserId"]!;
-            await _mediator.Send(new MakeUserAdminCommand(1));
+            int id = (int)HttpContext.Items["UserId"]!;
+            await _mediator.Send(new MakeUserAdminCommand(id));
             return Ok();
         }
     }

@@ -13,6 +13,9 @@ import { ProfileDishesComponent } from './components/profile-dishes/profile-dish
 import { MealPlansComponent } from './components/meal-plans/meal-plans.component'
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { FoodStatisticsComponent } from './components/food-statistics/food-statistics.component'
+import { MyMealPlansComponent } from './components/my-meal-plans/my-meal-plans.component'
+import { CreateMealPlanComponent } from './components/create-meal-plan/create-meal-plan.component'
+import { TestPageComponent } from './components/test-page/test-page.component'
 
   const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -24,8 +27,11 @@ import { FoodStatisticsComponent } from './components/food-statistics/food-stati
     { path: 'food', component: ProfileIngredientsComponent, canActivate: [AuthGuard] },
     { path: 'dishes', component: ProfileDishesComponent, canActivate: [AuthGuard] },
     { path: 'meal-plans', component: MealPlansComponent, canActivate: [AuthGuard] },
+    { path: 'my-meal-plans', component: MyMealPlansComponent },
     { path: 'statistics', component: StatisticsComponent, canActivate: [AuthGuard] },
     { path: 'food-statistics', component: FoodStatisticsComponent, canActivate: [AuthGuard] },
+    { path: 'create-meal-plan', component: CreateMealPlanComponent },
+    { path: 'test', component: TestPageComponent },
     { path: '**', redirectTo: '' },
   ];
 

@@ -11,8 +11,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
-  profiles$!: Observable<Profile[]>; // Отложенная инициализация
-  currentUser$!: Observable<Profile | null>; // Отложенная инициализация
+  profiles$!: Observable<Profile[]>;
+  currentUser$!: Observable<Profile | null>;
   showProfileList: boolean = false;
 
   constructor(
@@ -32,7 +32,6 @@ export class SidebarComponent implements OnInit {
       });
 
 
-    // Слушаем клики по документу
     this.renderer.listen('document', 'click', (event) => {
         this.showProfileList = false;
     });

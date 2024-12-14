@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using MealPlanService.Application.DTOs;
 using MealPlanService.Domain.Entities;
-using Microsoft.AspNetCore.Http;
 
 namespace MealPlanService.Application.UseCases
 {

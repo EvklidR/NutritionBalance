@@ -3,7 +3,6 @@ using MediatR;
 using UserProfileService.Application.DTOs;
 using UserProfileService.Application.Exceptions;
 using UserProfileService.Application.UseCases.DayResult;
-using UserProfileService.Domain.Entities;
 using UserProfileService.Domain.Interfaces;
 
 namespace UserProfileService.Application.UseCases.Profile
@@ -43,7 +42,7 @@ namespace UserProfileService.Application.UseCases.Profile
 
             _mapper.Map(request.ProfileDto, profile);
 
-            if (request.ProfileDto.Weight!= null || request.ProfileDto.Height != null || request.ProfileDto.ActivityLevel != null)
+            if (request.ProfileDto.Weight!= null)
             {
                 var dayResult = await _mediator.Send(
                     new GetOrCreateDayResultCommand(
@@ -52,10 +51,6 @@ namespace UserProfileService.Application.UseCases.Profile
                         profile.UserId));
 
                 dayResult.Weight = request.ProfileDto.Weight;
-                dayResult.Height = request.ProfileDto.Height;
-                dayResult.ActivityLevel = GetActivityMultiplier(request.ProfileDto.ActivityLevel);
-
-
 
             }
 

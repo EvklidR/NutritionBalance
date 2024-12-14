@@ -13,6 +13,19 @@ export class DishService {
 
   constructor(private http: HttpClient) { }
 
+  updateImage(dishId: number, file: File): Observable<void> {
+    const formData = new FormData();
+    formData.append('dishId', dishId.toString());
+    formData.append('file', file, file.name);
+
+    return this.http.patch<void>(`${this.apiUrl}/update-file`, formData);
+  }
+
+  getImage(fileName: string): Observable<Blob> {
+    const url = `${this.apiUrl}/get-file/${fileName}`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
+
   getDishById(id: number): Observable<Dish> {
     return this.http.get<Dish>(`${this.apiUrl}/${id}`);
   }

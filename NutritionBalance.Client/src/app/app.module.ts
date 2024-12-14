@@ -25,7 +25,11 @@ import { AddDishModalComponent } from './components/add-dish-modal/add-dish-moda
 import { DishIngredientsModalComponent } from './components/dish-ingredients-modal/dish-ingredients-modal.component';
 import { MealPlansComponent } from './components/meal-plans/meal-plans.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
-import { FoodStatisticsComponent } from './components/food-statistics/food-statistics.component'
+import { FoodStatisticsComponent } from './components/food-statistics/food-statistics.component';
+import { MyMealPlansComponent } from './components/my-meal-plans/my-meal-plans.component';
+import { CreateMealPlanComponent } from './components/create-meal-plan/create-meal-plan.component';
+import { TestPageComponent } from './components/test-page/test-page.component';
+import { CreateMealComponent } from './components/create-meal/create-meal.component'
 
 @NgModule({
   declarations: [
@@ -46,6 +50,10 @@ import { FoodStatisticsComponent } from './components/food-statistics/food-stati
     MealPlansComponent,
     StatisticsComponent,
     FoodStatisticsComponent,
+    MyMealPlansComponent,
+    CreateMealPlanComponent,
+    TestPageComponent,
+    CreateMealComponent,
     
   ],
   imports: [

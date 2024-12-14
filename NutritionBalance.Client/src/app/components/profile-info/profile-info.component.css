@@ -7,13 +7,13 @@
 
 .bmi-header {
   font-size: 28px;
-  margin-bottom: 40px; /* Увеличено вертикальное расстояние */
+  margin-bottom: 40px; 
 }
 
 .row {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 40px; /* Увеличено вертикальное расстояние */
+  margin-bottom: 40px;
   gap: 20px;
 }
 
@@ -22,12 +22,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* Увеличено вертикальное расстояние */
+  gap: 20px;
 }
 
 .label {
   font-size: 20px;
-  margin-bottom: 15px; /* Увеличено вертикальное расстояние */
+  margin-bottom: 15px;
 }
 
 .value-box {
@@ -56,7 +56,6 @@ input[type="number"] {
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 5px;
-  /* Убираем стили по умолчанию */
   -moz-appearance: textfield;
 }
 
@@ -74,13 +73,13 @@ select {
 }
 
 .update-button {
-  margin-top: 50px; /* Увеличено вертикальное расстояние */
+  margin-top: 50px;
 }
 
   .update-button button {
     font-size: 18px;
     padding: 12px 24px;
-    background-color: #d3d347; /* Цвет кнопки */
+    background-color: #d3d347;
     color: #333;
     border: none;
     border-radius: 5px;
@@ -89,5 +88,5 @@ select {
   }
 
     .update-button button:hover {
-      background-color: #c1c12f; /* Немного темнее при наведении */
+      background-color: #c1c12f;
     }

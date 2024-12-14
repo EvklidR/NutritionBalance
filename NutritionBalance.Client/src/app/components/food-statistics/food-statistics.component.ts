@@ -185,7 +185,7 @@ export class FoodStatisticsComponent implements OnInit {
   }
 
   exportToPDF(): void {
-    const doc = new jsPDF('l', 'mm', 'a4'); // 'l' for landscape orientation
+    const doc = new jsPDF('l', 'mm', 'a4');
     const userName = this.profile ? this.profile.name : 'Unknown User';
 
     const header = `User Report: ${userName}`;
@@ -193,13 +193,25 @@ export class FoodStatisticsComponent implements OnInit {
     doc.text(header, 10, 10);
 
     html2canvas(document.querySelector('ngx-charts-line-chart')!).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
+      const tempCanvas = document.createElement('canvas');
+      const ctx = tempCanvas.getContext('2d');
+
       const imgWidth = 297;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      doc.addImage(imgData, 'JPEG', 0, 20, imgWidth, imgHeight); // Stretch the image to full width
+      tempCanvas.width = imgWidth;
+      tempCanvas.height = imgHeight;
 
-      doc.addPage('a4','p'); // Add a new page with portrait orientation
+      ctx!.drawImage(canvas, 0, 0, imgWidth, imgHeight);
+
+      ctx!.filter = 'brightness(1.2)';
+      ctx!.drawImage(tempCanvas, 0, 0);
+
+      const imgData = tempCanvas.toDataURL('image/png');
+
+      doc.addImage(imgData, 'JPEG', 0, 20, imgWidth, imgHeight);
+
+      doc.addPage('a4', 'p');
       doc.text('Top 15 Foods:', 10, 10);
 
       const headers = ['Food', 'Weight (g)', 'Calories (kcal)', 'Proteins (g)', 'Fats (g)', 'Carbohydrates (g)'];

@@ -18,8 +18,10 @@ export class ProfileDishesComponent implements OnInit {
   profileId: number = 0;
   private profileSubscription!: Subscription;
 
-  filterText: string = ''; // Поле для ввода текста фильтрации
-  filteredDishes: Dish[] = []; // Отфильтрованный список блюд
+  dishImages: { [planId: number]: string } = {};
+
+  filterText: string = '';
+  filteredDishes: Dish[] = [];
 
   showAddDishModal: boolean = false;
 
@@ -54,10 +56,30 @@ export class ProfileDishesComponent implements OnInit {
         this.dishes = data;
         this.filteredDishes = data;
         this.isLoading = false;
+        this.dishes.forEach(dish => {
+          if (dish.imageUrl && !this.dishImages[dish.id]) {
+            this.loadImage(dish.id, dish.imageUrl);
+          }
+        });
       },
       (error) => {
         console.error('Ошибка загрузки блюд:', error);
         this.isLoading = false;
+      }
+    );
+  }
+
+  loadImage(dishId: number, imageUrl: string): void {
+    this.dishService.getImage(imageUrl).subscribe(
+      (blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.dishImages[dishId] = reader.result as string;
+        };
+        reader.readAsDataURL(blob);
+      },
+      (error) => {
+        console.error(`Ошибка загрузки изображения для блюда с ID ${dishId}:`, error);
       }
     );
   }
@@ -89,7 +111,7 @@ export class ProfileDishesComponent implements OnInit {
   }
 
   selectedDishIngredients: IngredientOfDish[] = [];
-  selectedDish: Dish = new Dish;;
+  selectedDish: Dish = new Dish;
   showIngredientsModal: boolean = false;
 
   openIngredientsModal(dish: Dish) {
@@ -100,7 +122,6 @@ export class ProfileDishesComponent implements OnInit {
         this.showIngredientsModal = true;
       }
     )
-
   }
 
   onDishAdded(newDish: Dish): void {

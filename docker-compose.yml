@@ -1,0 +1,65 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+      SA_PASSWORD: "YourStrong@Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    networks:
+      - mynetwork
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
+
+  authorisationservice.api:
+    image: ${DOCKER_REGISTRY-}authorisationserviceapi
+    build:
+      context: .
+      dockerfile: AuthorisationService/AuthorisationService.API/Dockerfile
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - mynetwork
+
+  userprofileservice.api:
+    image: ${DOCKER_REGISTRY-}userprofileserviceapi
+    build:
+      context: .
+      dockerfile: UserProfileService/UserProfileService.API/Dockerfile
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - mynetwork
+
+  mealplanservice.api:
+    image: ${DOCKER_REGISTRY-}mealplanserviceapi
+    build:
+      context: .
+      dockerfile: MealPlanService/MealPlanService.API/Dockerfile
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - mynetwork
+
+  nutritionbalance.apigateway:
+    image: ${DOCKER_REGISTRY-}nutritionbalanceapigateway
+    build:
+      context: .
+      dockerfile: NutritionBalance.ApiGateway/Dockerfile
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge

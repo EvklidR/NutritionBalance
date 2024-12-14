@@ -31,9 +31,6 @@ namespace UserProfileService.Infrastructure.MSSQL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<double?>("ActivityLevel")
-                        .HasColumnType("float");
-
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date");
 
@@ -41,9 +38,6 @@ namespace UserProfileService.Infrastructure.MSSQL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValue(0);
-
-                    b.Property<double?>("Height")
-                        .HasColumnType("float");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("int");
@@ -109,8 +103,6 @@ namespace UserProfileService.Infrastructure.MSSQL.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("Food", "UserProfileServiceSchema");
 
@@ -254,17 +246,6 @@ namespace UserProfileService.Infrastructure.MSSQL.Migrations
                         .IsRequired();
 
                     b.Navigation("Food");
-                });
-
-            modelBuilder.Entity("UserProfileService.Domain.Entities.Food", b =>
-                {
-                    b.HasOne("UserProfileService.Domain.Entities.Profile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Profile");
                 });
 
             modelBuilder.Entity("UserProfileService.Domain.Entities.IngredientOfDish", b =>

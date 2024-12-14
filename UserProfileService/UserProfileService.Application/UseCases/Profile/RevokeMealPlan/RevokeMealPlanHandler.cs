@@ -1,7 +1,6 @@
 ﻿using UserProfileService.Domain.Interfaces;
 using UserProfileService.Application.Exceptions;
 using MediatR;
-using UserProfileService.Domain.Entities;
 
 namespace UserProfileService.Application.UseCases.Profile
 {

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using UserProfileService.Domain.Interfaces;
 
 namespace UserProfileService.Application.UseCases.Profile

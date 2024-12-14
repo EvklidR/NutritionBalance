@@ -1,6 +1,6 @@
 <div class="dish-list">
   <div class="header-buttons">
-    <button class="switch-button ingr-btn" (click)="navigateToIngredients()">Ингредиенты</button>
+    <button class="switch-button ingr-btn" (click)="navigateToIngredients()">Продукты</button>
     <button class="switch-button active">Блюда</button>
   </div>
 
@@ -12,7 +12,7 @@
                       [profileId]="profileId"
                       (dishAdded)="onDishAdded($event)"
                       (closeModal)="showAddDishModal = false">
-</app-add-dish-modal>
+  </app-add-dish-modal>
 
 
   <div *ngIf="isLoading" class="loading">Загрузка...</div>
@@ -22,7 +22,12 @@
   </div>
 
   <div class="dishes-container" *ngIf="!isLoading && filteredDishes.length > 0">
-    <div class="dish-card" *ngFor="let dish of filteredDishes" (click)="openIngredientsModal(dish)">
+    <div class="dish-card"
+         *ngFor="let dish of filteredDishes"
+         (click)="openIngredientsModal(dish)"
+         [style.backgroundImage]="dishImages[dish.id] ? 'url(' + dishImages[dish.id] + ')' : ''"
+         [style.backgroundSize]="'cover'"
+         [class.bg-img]="dishImages[dish.id] != null">
       <div class="dish-header">
         <h3>{{ dish.name }}</h3>
         <button class="delete-button" (click)="deleteDish(dish.id); $event.stopPropagation()">🗑️</button>

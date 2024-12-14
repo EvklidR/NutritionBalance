@@ -28,7 +28,9 @@ namespace AuthorisationService.Infrastructure.Services
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthOptions:Key"]));
+            var rawKey = _configuration["AuthOptions:Key"];
+            var base64Key = Convert.ToBase64String(Encoding.UTF8.GetBytes(rawKey));
+            var secretKey = new SymmetricSecurityKey(Convert.FromBase64String(base64Key));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
 
             var tokenOptions = new JwtSecurityToken(

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { CreateUserDto } from '../models/auth/DTOs/create-user.dto';
 import { map, tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import jwt_decode from 'jwt-decode';
+
+import { decode } from 'base-64';
+window.atob = decode;
 
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -16,33 +18,8 @@ export class AuthService {
 
   private readonly baseUrl: string = 'https://localhost:7078/authorisation-service';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
-  private getAccessToken(): string | null {
-    return localStorage.getItem('accessToken');
-  }
-
-  private getRefreshToken(): string | null {
-    return localStorage.getItem('refreshToken');
-  }
-
-  private setAccessToken(token: string): void {
-    localStorage.setItem('accessToken', token);
-  }
-
-  private setRefreshToken(token: string): void {
-    localStorage.setItem('refreshToken', token);
-  }
-
-  private removeTokens(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-  }
-
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem('accessToken');
-    return !!token;
-  }
 
   login(command: { username: string, password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/login`, command).pipe(
@@ -50,6 +27,10 @@ export class AuthService {
         if (response.accessToken && response.refreshToken) {
           this.setAccessToken(response.accessToken);
           this.setRefreshToken(response.refreshToken);
+          const role = this.getUserRoleFromToken()
+          if (role != null) {
+            this.setUserRole(role)
+          }
         }
         return response;
       })
@@ -96,23 +77,78 @@ export class AuthService {
   logout(): void {
     this.revokeToken()
     this.removeTokens()
-    localStorage.removeItem('currentProfileId');
     this.router.navigate(['/login']);
   }
 
-  //isAdmin(): boolean {
-  //  const token = this.getAccessToken();
-  //  if (!token) {
-  //    return false;
-  //  }
+  private getAccessToken(): string | null {
+    return localStorage.getItem('accessToken');
+  }
 
-  //  try {
-  //    const decodedToken: any = jwt_decode(token);
-  //    return decodedToken.role === 'admin';
-  //  } catch (error) {
-  //    console.error('Error decoding token', error);
-  //    return false;
-  //  }
-  //}
+  private getRefreshToken(): string | null {
+    return localStorage.getItem('refreshToken');
+  }
 
+  private setAccessToken(token: string): void {
+    localStorage.setItem('accessToken', token);
+  }
+
+  private setRefreshToken(token: string): void {
+    localStorage.setItem('refreshToken', token);
+  }
+
+  private getUserRole(): string | null {
+    return localStorage.getItem('role');
+  }
+
+  private setUserRole(token: string): void {
+    localStorage.setItem('role', token);
+  }
+
+  private removeTokens(): void {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('role');
+    localStorage.removeItem('currentProfileId');
+  }
+
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('accessToken');
+    return !!token;
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() == "admin";
+  }
+
+  private getUserRoleFromToken(): string | null {
+    const token = localStorage.getItem('accessToken');
+
+    if (!token) {
+      this.logout();
+      return null;
+    }
+
+    const payload = token.split('.')[1];
+    if (!payload) {
+      this.logout();
+      return null;
+    }
+
+    try {
+      const decodedPayload = atob(payload);
+      const payloadObject = JSON.parse(decodedPayload);
+      const role = payloadObject['role'] || payloadObject['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || null;
+
+      if (!role) {
+        this.logout();
+        return null;
+      }
+
+      return role;
+    } catch (error) {
+      console.error('Ошибка при декодировании токена:', error);
+      this.logout();
+      return null;
+    }
+  }
 }

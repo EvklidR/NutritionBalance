@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using UserProfileService.Application.Exceptions;
 using UserProfileService.Application.Interfaces;
-using UserProfileService.Domain.Entities;
 using UserProfileService.Domain.Interfaces;
 
 namespace UserProfileService.Application.UseCases.Dish

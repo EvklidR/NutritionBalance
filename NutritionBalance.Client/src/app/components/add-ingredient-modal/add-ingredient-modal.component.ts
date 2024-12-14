@@ -22,12 +22,11 @@ export class AddIngredientModalComponent {
 
   isSaving: boolean = false;
 
-  ingredientSearchTerm: string = ''; // Поле для поиска ингредиентов
+  ingredientSearchTerm: string = '';
   ingredientsFromApi: Ingredient[] = [];
   searchDebounce: Subject<string> = new Subject<string>();
 
   constructor(private ingredientService: IngredientService) {
-    // Настройка debounce для поиска
     this.searchDebounce.pipe(debounceTime(1000)).subscribe((searchTerm) => {
       this.getIngredientsFromApi(searchTerm);
     });
@@ -55,13 +54,11 @@ export class AddIngredientModalComponent {
   }
 
   selectIngredient(ingredient: Ingredient): void {
-    // Устанавливаем данные выбранного ингредиента
     this.name = ingredient.name;
     this.proteins = ingredient.proteins;
     this.fats = ingredient.fats;
     this.carbohydrates = ingredient.carbohydrates;
 
-    // Сбрасываем поиск
     this.ingredientSearchTerm = '';
     this.ingredientsFromApi = [];
   }

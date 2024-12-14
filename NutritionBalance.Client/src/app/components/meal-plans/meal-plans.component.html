@@ -2,12 +2,18 @@
 
   <div *ngIf="choosenMealPlan; else noPlan">
     <h2>Текущий план: <span>{{ choosenMealPlan.name }}</span></h2>
-    
+
     <p>{{ choosenMealPlan.description }}</p>
   </div>
   <ng-template #noPlan>
     <p>Текущий план не выбран</p>
   </ng-template>
+</div>
+
+<div class="header-buttons">
+  <button class="switch-button">Планы питания</button>
+  <button class="switch-button second-btn" *ngIf="userRole === 'admin'" (click)="navigateToMyPlans()">Мои планы питания</button>
+  <button class="switch-button second-btn" *ngIf="userRole !== 'admin'" (click)="navigateToTest()">Пройти тест</button>
 </div>
 
 

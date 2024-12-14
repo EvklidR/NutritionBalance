@@ -1,10 +1,7 @@
 <div class="profile-info">
-  <!-- Текущий ИМТ -->
   <h1 class="bmi-header">Текущий ИМТ: <span>{{ bmi | number:'1.1-1' }}</span></h1>
 
-  <!-- Блок с весом и ростом -->
   <div class="row">
-    <!-- Вес -->
     <div class="info-block">
       <div class="label">Вес (кг)</div>
       <div class="value-box">
@@ -14,7 +11,6 @@
       </div>
     </div>
 
-    <!-- Рост -->
     <div class="info-block">
       <div class="label">Рост (см)</div>
       <div class="value-box">
@@ -25,7 +21,6 @@
     </div>
   </div>
 
-  <!-- Уровень активности -->
   <div class="activity-block">
     <div class="label">Уровень активности</div>
     <div class="value-box">
@@ -37,7 +32,6 @@
     </div>
   </div>
 
-  <!-- Кнопка обновления -->
   <div class="update-button">
     <button (click)="updateProfile()">Обновить информацию</button>
   </div>

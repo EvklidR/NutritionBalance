@@ -13,6 +13,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["MealPlanService/MealPlanService.API/MealPlanService.API.csproj", "MealPlanService/MealPlanService.API/"]
+COPY ["NutritionBalance.ServiceDefaults/NutritionBalance.ServiceDefaults.csproj", "NutritionBalance.ServiceDefaults/"]
+COPY ["MealPlanService/MealPlanService.Application/MealPlanService.Application.csproj", "MealPlanService/MealPlanService.Application/"]
+COPY ["MealPlanService/MealPlanService.Domain/MealPlanService.Domain.csproj", "MealPlanService/MealPlanService.Domain/"]
+COPY ["MealPlanService/MealPlanService.Infrastructure/MealPlanService.Infrastructure.csproj", "MealPlanService/MealPlanService.Infrastructure/"]
 RUN dotnet restore "./MealPlanService/MealPlanService.API/MealPlanService.API.csproj"
 COPY . .
 WORKDIR "/src/MealPlanService/MealPlanService.API"

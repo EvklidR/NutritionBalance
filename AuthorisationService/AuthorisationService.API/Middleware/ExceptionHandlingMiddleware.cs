@@ -47,7 +47,7 @@ namespace AuthorisationService.Api.Middleware
                     break;
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
-                    result = "An unexpected error occurred.";
+                    result = exception.Message;
                     break;
             }
 
